@@ -64,3 +64,9 @@ body{
 #subjectsIntro{
     color: #888888;
 }
+
+/*Setting rich text editors side by side in edit flashcard page*/
+#editorsContainer{
+    display: flex;
+    gap: 20px;
+}
