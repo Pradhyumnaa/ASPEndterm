@@ -64,3 +64,37 @@ body{
 #subjectsIntro{
     color: #888888;
 }
+
+#subjectButton{
+  width: 22.5%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  font-size: 18px;
+}
+
+ul.breadcrumb {
+    list-style: none;
+  }
+  ul.breadcrumb li {
+    display: inline;
+    font-size: 24px;
+  }
+  ul.breadcrumb li+li:before {
+    padding: 8px;
+    color: #888;
+    content: ">";
+  }
+  ul.breadcrumb li a {
+    color: #888;
+    text-decoration: none;
+  }
+  ul.breadcrumb li a:hover {
+    color: #0d6efd;
+    text-decoration: none;    
+  }
+
+  #startQuizButton {
+    color: #0d6efd;
+    text-decoration: none;    
+    font-size: 24px;
+  }
