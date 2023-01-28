@@ -1,7 +1,11 @@
 var router = require('express').Router();
 const {requiresAuth} = require('express-openid-connect');
 
-var userEmail = ""
+//Global Variable for the Current User's Email
+var userEmail = "";
+
+//Global Variable to Identify the current subject page.
+var currentSubject = 0;
 
 // router.get('/', function (req, res, next) {
 // res.render('index', {
@@ -13,6 +17,8 @@ var userEmail = ""
 router.get('/', function (req, res, next) {
     if (req.oidc.isAuthenticated()) {
         userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
+
+        console.log(userEmail)
 
         let subjectQuery = "SELECT * FROM subjects;";
 
@@ -31,6 +37,10 @@ router.get('/', function (req, res, next) {
 
 router.get('/collections/:subject', function (req, res) {
     const subject_id = req.params.subject;
+    currentSubject = subject_id;
+
+    console.log(currentSubject)
+
     global.db.all("SELECT * FROM subjects where subject_id=?", [subject_id], function (err, subject) {
         if (err) {
             console.log(err);

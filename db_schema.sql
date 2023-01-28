@@ -2,7 +2,6 @@ PRAGMA foreign_keys=ON;
 
 BEGIN TRANSACTION;
 
-
 CREATE TABLE IF NOT EXISTS subjects (
     subject_id INTEGER PRIMARY KEY AUTOINCREMENT,
     subject_name TEXT NOT NULL,
