@@ -35,21 +35,21 @@
 
     <p class="mt-5 fs-4">Level 4</p>
     <% subjectData.forEach(function(subject){ %>
-        <%if (subject.level_id == 1){ %>
+        <%if (subject.level_id == 4){ %>
             <a class="me-4 mt-1 mb-4 shadow btn btn-white" href="/collections/<%= subject.subject_id %>" role="button" id="subjectButton"><%= subject.subject_name %></a>
         <% } %>
     <% }) %>
 
     <p class="mt-5 fs-4">Level 5</p>
     <% subjectData.forEach(function(subject){ %>
-        <%if (subject.level_id == 2){ %>
+        <%if (subject.level_id == 5){ %>
             <a class="me-4 mt-1 mb-4 shadow btn btn-white" href="/collections/<%= subject.subject_id %>" role="button" id="subjectButton"><%= subject.subject_name %></a>
         <% } %>
     <% }) %>
 
     <p class="mt-5 fs-4">Level 6</p>
     <% subjectData.forEach(function(subject){ %>
-        <%if (subject.level_id == 3){ %>
+        <%if (subject.level_id == 6){ %>
             <a class="me-4 mt-1 mb-4 shadow btn btn-white" href="/collections/<%= subject.subject_id %>" role="button" id="subjectButton"><%= subject.subject_name %></a>
         <% } %>
     <% }) %>

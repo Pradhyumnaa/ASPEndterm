@@ -39,7 +39,7 @@ router.get('/collections/:subject', function (req, res) {
     const subject_id = req.params.subject;
     currentSubject = subject_id;
 
-    console.log(currentSubject)
+    console.log(currentSubject);
 
     global.db.all("SELECT * FROM subjects where subject_id=?", [subject_id], function (err, subject) {
         if (err) {
