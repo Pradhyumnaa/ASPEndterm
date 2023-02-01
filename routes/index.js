@@ -36,18 +36,22 @@ router.get('/', function (req, res, next) {
 
 
 router.get('/collections/:subject', function (req, res) {
-    const subject_id = req.params.subject;
-    currentSubject = subject_id;
-
-    console.log(currentSubject);
-
-    global.db.all("SELECT * FROM subjects where subject_id=?", [subject_id], function (err, subject) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render('collections', {subject: subject[0]})
-        }
-    });
+    if (req.oidc.isAuthenticated()) {
+        const subject_id = req.params.subject;
+        currentSubject = subject_id;
+        
+        console.log(currentSubject);
+        
+        global.db.all("SELECT * FROM subjects where subject_id=?", [subject_id], function (err, subject) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render('collections', {subject: subject[0]})
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
 });
 
 // router.get('/profile', requiresAuth(), function (req, res, next) {
