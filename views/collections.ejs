@@ -60,7 +60,7 @@
         <div class="modal fade" id="editModal<%= collection.collection_id %>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header border-0">
                         <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Edit <%= collection.collection_name %></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -68,7 +68,7 @@
                         <div class="modal-body">
                             <input class="form-control form-control-lg" type="text" value="<%= collection.collection_name %>" aria-label=".form-control-lg example" name="collectionName" id="collectionName" maxlength="28" pattern="^[a-zA-Z0-9\s]+$" title="No Special Characters" required>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer border-0">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <button class="btn btn-primary" type="submit" name="<%= collection.collection_id %>">Save</button>
                         </div>
@@ -81,14 +81,16 @@
         <div class="modal fade" id="deleteModal<%= collection.collection_id %>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header border-0">
                         <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Delete <%= collection.collection_name %></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Delete <%= collection.collection_name %>? This action cannot be undone.
+                        <div class="alert alert-danger" role="alert">
+                            Delete <%= collection.collection_name %>? This action cannot be undone.
+                        </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer border-0">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <form method="post" action="/deleteCollection">
                             <button class="btn btn-danger" type="submit" name="<%= collection.collection_id %>">Delete</button>
@@ -105,7 +107,7 @@
     <div class="modal fade" id="createCollectionModal" tabindex="-1" aria-labelledby="createCollectionModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header border-0">
                     <h1 class="modal-title fs-5" id="createCollectionModalLabel">Create New Collection</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -113,7 +115,7 @@
                     <div class="modal-body">
                         <input class="form-control form-control-lg" type="text" placeholder="Collection Name" aria-label=".form-control-lg example" name="collectionName" id="collectionName" maxlength="28" pattern="^[a-zA-Z0-9\s]+$" title="No Special Characters"  required>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer border-0">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button class="btn btn-primary" type="submit">Create</button>
                     </div>
