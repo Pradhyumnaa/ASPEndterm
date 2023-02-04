@@ -72,29 +72,15 @@ body{
   font-size: 18px;
 }
 
-ul.breadcrumb {
-  list-style: none;
-}
+/*Breadcrumb Design*/
 
-ul.breadcrumb li {  
-  display: inline;
+.breadcrumb-item{
   font-size: 24px;
 }
 
-ul.breadcrumb li+li:before {
-  padding: 8px;
-  color: #888;
-  content: ">";
-}
-
-ul.breadcrumb li a {
-  color: #888;
+.breadcrumb-item a{
+  font-size: 24px;
   text-decoration: none;
-}
-
-ul.breadcrumb li a:hover {
-  color: #0d6efd;
-  text-decoration: none;    
 }
 
 #startQuizButton {
@@ -102,6 +88,7 @@ ul.breadcrumb li a:hover {
   text-decoration: none;    
   font-size: 24px;
 }
+
 
 /*Collections Page Button Designs*/
 
@@ -115,13 +102,6 @@ ul.breadcrumb li a:hover {
   border-width: 2px;
   border-style: dashed;
   border-color: #c4c4c4;
-}
-
-#collectionButton{
-  width: 30%;
-  padding-top: 9%;
-  padding-bottom: 9%;
-  font-size: 22px;  
 }
 
 #collectionGroup{

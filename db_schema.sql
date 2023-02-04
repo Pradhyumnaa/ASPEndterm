@@ -17,14 +17,14 @@ CREATE TABLE IF NOT EXISTS collections (
 
 
 
-INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP I", 4);
-INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP II", 4);
+INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP1", 4);
+INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP2", 4);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("CM", 4);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("DM", 4);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("HCW", 4);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("FCS", 4);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("WD", 4);
-INSERT INTO subjects ("subject_name", "level_id") VALUES ("ADS I", 4);
+INSERT INTO subjects ("subject_name", "level_id") VALUES ("ADS1", 4);
 
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("OOP", 5);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("SDD", 5);
@@ -32,7 +32,7 @@ INSERT INTO subjects ("subject_name", "level_id") VALUES ("DNW", 5);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("ASP", 5);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("CS", 5);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("GP", 5);
-INSERT INTO subjects ("subject_name", "level_id") VALUES ("ADS II", 5);
+INSERT INTO subjects ("subject_name", "level_id") VALUES ("ADS2", 5);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("PWD", 5);
 
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("DS", 6);
@@ -43,7 +43,7 @@ INSERT INTO subjects ("subject_name", "level_id") VALUES ("VR", 6);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("GD", 6);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("AWD", 6);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("IOT", 6);
-INSERT INTO subjects ("subject_name", "level_id") VALUES ("6D", 6);
+INSERT INTO subjects ("subject_name", "level_id") VALUES ("3D", 6);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("MD", 6);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("ID", 6);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("NLP", 6);
