@@ -10,6 +10,7 @@ var currentSubject = 0;
 //Global Variable to Identify the current collection page.
 var currentCollection = 0;
 
+//Get function for the Login Page if not Authenticated. Subjects page if Authenticated.
 router.get('/', function (req, res, next) {
     if (req.oidc.isAuthenticated()) {
         userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
@@ -118,7 +119,6 @@ router.post("/deleteCollection" , (req, res, next) => {
 
 
 //Get function that goes to the flashcard page of the respective collection
-//Get function that controls the collections page
 router.get('/collections/:subject/:collection', function (req, res) {
     if (req.oidc.isAuthenticated()) {
         currentSubject = req.params.subject;
