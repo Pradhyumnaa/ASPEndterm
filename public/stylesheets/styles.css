@@ -126,3 +126,11 @@ body{
   border-style: dashed;
   border-color: #c4c4c4;
 }
+
+.modal-header {
+  border-bottom: 0 none;
+}
+
+.modal-footer {
+  border-top: 0 none;
+}
