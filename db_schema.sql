@@ -8,6 +8,14 @@ CREATE TABLE IF NOT EXISTS subjects (
     level_id  INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS collections (
+    collection_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    collection_name TEXT NOT NULL,
+    subject_id INTEGER NOT NULL,
+    user_email TEXT NOT NULL
+);
+
+
 
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP I", 4);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP II", 4);
@@ -40,6 +48,5 @@ INSERT INTO subjects ("subject_name", "level_id") VALUES ("MD", 6);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("ID", 6);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("NLP", 6);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("ISP", 6);
-
 
 COMMIT;
