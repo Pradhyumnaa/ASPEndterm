@@ -113,3 +113,16 @@ body{
   padding-bottom: 25%;
   font-size: 22px;
 }
+
+/*Flashcard Page Design*/
+#createNewFlashcardButton{
+  width: 100%;
+  padding-top: 9%;
+  padding-bottom: 9%;
+  font-size: 22px;
+  color: #888;
+
+  border-width: 2px;
+  border-style: dashed;
+  border-color: #c4c4c4;
+}
