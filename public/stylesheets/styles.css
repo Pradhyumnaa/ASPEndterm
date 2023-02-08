@@ -134,3 +134,9 @@ body{
 .modal-footer {
   border-top: 0 none;
 }
+
+/*Setting rich text editors side by side in flashcard page*/
+#editorsContainer{
+    display: flex;
+    gap: 20px;
+}
