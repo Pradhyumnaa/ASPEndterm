@@ -2,7 +2,9 @@
   "name": "auth0-express-webapp-sample",
   "scripts": {
     "build-db": "type db_schema.sql | sqlite3 database.db",
-    "clean-db": "del /f database.db"
+    "clean-db": "del /f database.db",
+    "build-db-unix": "cat db_schema.sql | sqlite3 database.db",
+    "clean-db-unix": "rm -f database.db"
   },
   "dependencies": {
     "bootstrap-icons": "^1.10.3",
