@@ -1,15 +1,15 @@
 /*SF Pro Display font Importing via CDN*/
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
-       
+
 /*Setting The Font of Body to SF Pro Display*/
 body{
-    font-family: 'SF Pro Display', sans-serif;                                                                                    
-}                
+    font-family: 'SF Pro Display', sans-serif;
+}
 
 /*Login Page Background Colour and Font*/
 #loginPageBody{
     background-color: #FBFBFD;
-    font-family: 'SF Pro Display', sans-serif;                                 
+    font-family: 'SF Pro Display', sans-serif;
 }
 
 /*Login Page Container for Logo, Text and Button*/
@@ -57,7 +57,7 @@ body{
     margin-left: 7.5%;
     margin-right: 7.5%;
     background-color: #FBFBFD;
-    font-family: 'SF Pro Display', sans-serif;    
+    font-family: 'SF Pro Display', sans-serif;
 }
 
 /*Introduction for the Subjects Page*/
@@ -85,7 +85,7 @@ body{
 
 #startQuizButton {
   color: #0d6efd;
-  text-decoration: none;    
+  text-decoration: none;
   font-size: 24px;
 }
 
@@ -136,7 +136,10 @@ body{
 }
 
 /*Setting rich text editors side by side in flashcard page*/
-#editorsContainer{
+.single-card-container {
     display: flex;
-    gap: 20px;
+    justify-content: space-between;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #c4c4c4;
 }

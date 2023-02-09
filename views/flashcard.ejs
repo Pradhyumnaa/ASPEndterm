@@ -54,14 +54,17 @@
     </div>
 </div>
 
-<a class="me-4 mt-5 mb-4 btn btn-white" role="button" id="createNewFlashcardButton">Create New Flashcard</a>
+<!-- Container to hold all rich text editors -->
+<div class="mb-4 multi-card-container"></div>
 
-<!-- Container for rich text editors -->
-<div class="container mt-3" id="editorsContainer">
-    <div class="summernote">Question</div>
-    <div class="summernote">Answer</div>
-</div>
-
+<!-- Button to add new flashcard -->
+<a class="me-4 mt-5 mb-4 btn btn-white" role="button" id="createNewFlashcardButton">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle"
+         viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+    </svg>
+    Create New Flashcard</a>
 
 <!-- Scripts for implementing Summernote and Bootstrap javascript -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
@@ -74,11 +77,33 @@
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
 <script src="/summernote/summernote-bs4.min.js"></script>
-<script>
+
+
+<!-- Script for adding Question, Answer editors on button click -->
+<script type="text/javascript">
     $(document).ready(function () {
-        $('.summernote').summernote({
-            height: 150,  //set editable area's height
-        });
+        $('#createNewFlashcardButton').click(function (e) {
+                e.preventDefault();
+
+                let newFlashcardDiv = document.createElement('div');
+                newFlashcardDiv.classList.add('single-card-container', 'mb-4');
+
+                // Question editor
+                $('<div class="summernote">Question</div>')
+                    .appendTo(newFlashcardDiv)
+                    .summernote({
+                        height: 150
+                    });
+                // Answer editor
+                $('<div class="summernote">Answer</div>')
+                    .appendTo(newFlashcardDiv)
+                    .summernote({
+                        height: 150
+                    });
+
+                $('.multi-card-container').append(newFlashcardDiv);
+            }
+        );
     });
 </script>
 
