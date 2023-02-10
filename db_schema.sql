@@ -4,7 +4,7 @@ BEGIN TRANSACTION;
 
 CREATE TABLE IF NOT EXISTS subjects (
     subject_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    subject_name TEXT NOT NULL,
+    subject_name TEXT NOT NULL UNIQUE,
     level_id  INTEGER NOT NULL
 );
 
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS subjects (
 CREATE TABLE IF NOT EXISTS collections (
     collection_id INTEGER PRIMARY KEY AUTOINCREMENT,
     collection_name TEXT NOT NULL,
-    subject_id INTEGER NOT NULL,
+    subject_id TEXT NOT NULL,
     user_email TEXT NOT NULL
 );
 
@@ -28,10 +28,10 @@ CREATE TABLE IF NOT EXISTS flashcards (
 --      therefore, we can add a collection by specifying subject_id as 1
 --      now we can add flash cards by specifying subject collection_id as 1
 
-INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP1", 4); -- id -> 1
+INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP1", 4);
 
 INSERT INTO collections("collection_name", "subject_id", "user_email")
-    VALUES ("Midterm collection", 1 /* ITP1 */, "nethashavithana@gmail.com"); -- id -> 1
+    VALUES ("Midterm collection", "ITP1", "nethashavithana@gmail.com"); -- id -> 1
 
 INSERT INTO flashcards ("question", "answer", "collection_id")
     VALUES ("What is JavaScript?", "A programming language", 1 /* "Midterm collection" */),
