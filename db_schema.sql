@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS subjects (
     level_id  INTEGER NOT NULL
 );
 
+-- Collections are created per user, therefore we do not need to specify user_email per card
+-- as that is identified by the collection
 CREATE TABLE IF NOT EXISTS collections (
     collection_id INTEGER PRIMARY KEY AUTOINCREMENT,
     collection_name TEXT NOT NULL,
@@ -15,9 +17,28 @@ CREATE TABLE IF NOT EXISTS collections (
     user_email TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS flashcards (
+    flashcard_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    question TEXT,
+    answer TEXT,
+    collection_id INTEGER
+);
 
+-- Both subjects and collections will have id == 1 for the first entry,
+--      therefore, we can add a collection by specifying subject_id as 1
+--      now we can add flash cards by specifying subject collection_id as 1
 
-INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP1", 4);
+INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP1", 4); -- id -> 1
+
+INSERT INTO collections("collection_name", "subject_id", "user_email")
+    VALUES ("Midterm collection", 1 /* ITP1 */, "nethashavithana@gmail.com"); -- id -> 1
+
+INSERT INTO flashcards ("question", "answer", "collection_id")
+    VALUES ("What is JavaScript?", "A programming language", 1 /* "Midterm collection" */),
+           ("What is Python?", "A programming language", 1),
+           ("What is Juce?", "An audio programming library for C++", 1);
+
+-- Add the rest of the subjects
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP2", 4);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("CM", 4);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("DM", 4);
