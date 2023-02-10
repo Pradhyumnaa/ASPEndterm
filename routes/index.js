@@ -123,14 +123,14 @@ router.get('/collections/:subject/:collection', function (req, res) {
     if (req.oidc.isAuthenticated()) {
         currentSubject = req.params.subject;
         currentCollection = req.params.collection;
-        // TODO getUserEmail
+        userEmail = req.oidc.user.email;
 
         const getAllSubjectsQuery = "SELECT * FROM subjects WHERE subject_name=?;";
         const getCollectionsQuery = "SELECT * FROM collections WHERE subject_id = ? AND user_email = ? AND collection_id = ?;";
         const getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id = ?";
 
         global.db.all(getAllSubjectsQuery, [currentSubject], function (err, subject) {
-            global.db.all(getCollectionsQuery, [currentSubject, "nethashavithana@gmail.com", currentCollection], function (err, collection){
+            global.db.all(getCollectionsQuery, [currentSubject, userEmail, currentCollection], function (err, collection){
                 if(err){
                     console.log(err);
                 } else {
