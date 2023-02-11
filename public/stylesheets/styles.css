@@ -139,11 +139,12 @@ body{
 .single-card-container {
     display: flex;
     justify-content: space-between;
-    border-width: 2px;
-    border-style: solid;
-    border-color: #c4c4c4;
+    padding: 10px;
+    background-color: lightgrey;
+    border-radius: 10px;
 }
 
 .note-editor.note-frame {
-    width: 100%;
+    width: calc(50% - 30px);
+    background-color: white;
 }
