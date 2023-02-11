@@ -66,7 +66,7 @@
     <!-- Edit Cards tab -->
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button"
-                role="tab" aria-controls="edit-tab-pane" aria-selected="false">Edit Cards
+                role="tab" aria-controls="edit-tab-pane" aria-selected="false">Add/Edit Cards
         </button>
     </li>
     <!-- Browse Deck tab -->
@@ -83,7 +83,23 @@
     <!-- Tab view - Preview Cards -->
     <div class="tab-pane fade show active" id="preview-tab-pane" role="tabpanel" aria-labelledby="preview-tab"
          tabindex="0">
-        Preview Cards
+        <% flashcards.forEach(function(card) { %>
+            <div class="card-preview-container mb-4">
+                <!-- Question card -->
+                <div class="card">
+                    <div class="card-body">
+                        <%- card.question %>
+                    </div>
+                </div>
+                <!-- Answer card -->
+                <div class="card">
+                    <div class="card-body">
+                        <%- card.answer %>
+                    </div>
+                </div>
+            </div>
+
+        <% }) %>
     </div>
     <!-- Tab view - Edit Cards -->
     <div class="tab-pane fade" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab" tabindex="0">
@@ -104,8 +120,8 @@
             <!-- Container for rich text editors -->
             <% flashcards.forEach(function(card) { %>
                 <div class="single-card-container mb-4">
-                    <div class="summernote"><%= card.question %></div>
-                    <div class="summernote"><%= card.answer %></div>
+                    <div class="summernote"><%- card.question %></div>
+                    <div class="summernote"><%- card.answer %></div>
                     <!-- Delete card button -->
                     <div>
                         <button type="button" class="btn btn-danger delete-card-btn">
@@ -216,6 +232,7 @@
         $(this).closest('.single-card-container').remove();
     });
 
+    // Function to save flashcards
     $(document).on("click", ".save-button", function () {
         const flashcards = $('.single-card-container');
         const cards = [];

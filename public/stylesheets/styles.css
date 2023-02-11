@@ -144,6 +144,17 @@ body{
     border-radius: 10px;
 }
 
+.card-preview-container {
+    display: flex;
+    padding: 10px;
+    background-color: lightgrey;
+    border-radius: 10px;
+}
+
+.card {
+    width: 50%;
+}
+
 .note-editor.note-frame {
     width: calc(50% - 30px);
     background-color: white;
