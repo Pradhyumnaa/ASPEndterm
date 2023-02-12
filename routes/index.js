@@ -1,6 +1,9 @@
 var router = require('express').Router();
 const {requiresAuth} = require('express-openid-connect');
 
+// Library used to convert HTML to text - so we can see if HTML from Summernote editors are empty
+const {htmlToText} = require('html-to-text');
+
 //Global Variable for the Current User's Email
 var userEmail = "";
 
@@ -149,11 +152,18 @@ router.get('/collections/:subject/:collection', function (req, res) {
     }
 });
 
+// Function that uses html-to-text library to check if a Question or Answer summernote editor is empty
+function cardsFilterNonEmpty(card) {
+    return htmlToText(card[1]).trim().length !== 0 && htmlToText(card[2]).trim().length !== 0;
+}
+
 // Function to save flashcards when Save button is pressed
 router.post("/saveCardsOfCollection", (req, res, next) => {
     const collectionId = (req.body.collection_id);
-    const cards = req.body.cards;
     userEmail = req.oidc.user.email;
+
+    // Filtering out cards where Question or Answer is an empty string
+    const cards = req.body.cards.filter(cardsFilterNonEmpty);
 
     // From https://stackoverflow.com/questions/56210899/inserting-multiple-rows-with-multiple-columns-in-node-and-sqlite3
     // Separate the values for INSERT INTO operation using map() function
