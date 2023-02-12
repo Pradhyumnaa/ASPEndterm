@@ -160,6 +160,9 @@ body {
     background-color: white;
 }
 
+.flashcard-answer li {
+    text-align: left;
+}
 
 /* Carousel CSS - from https://www.w3schools.com/howto/howto_js_quotes_slideshow.asp */
 /* Slideshow container */
