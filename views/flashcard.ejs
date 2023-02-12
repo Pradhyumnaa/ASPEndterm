@@ -58,13 +58,13 @@
 <ul class="nav nav-pills nav-fill mt-4 mb-5" id="myTab" role="tablist">
     <!-- Add/Edit Cards tab -->
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button"
+        <button class="nav-link active" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button"
                 role="tab" aria-controls="edit-tab-pane" aria-selected="false">Add/Edit Cards
         </button>
     </li>
     <!-- Preview Cards tab -->
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="preview-tab" data-bs-toggle="tab" data-bs-target="#preview-tab-pane"
+        <button class="nav-link" id="preview-tab" data-bs-toggle="tab" data-bs-target="#preview-tab-pane"
                 type="button"
                 role="tab" aria-controls="preview-tab-pane" aria-selected="true">Preview Cards
         </button>
@@ -82,7 +82,7 @@
 <div class="tab-content" id="myTabContent">
 
     <!-- Tab view - Edit Cards -->
-    <div class="tab-pane fade" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab" tabindex="0">
+    <div class="tab-pane fade show active" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab" tabindex="0">
         <!-- Collection ID is in a hidden element so it can be used by the save function -->
         <div style="display: none" id="collection_id"><%= collection_id %></div>
         <!-- Save button -->
@@ -116,7 +116,7 @@
     </div>
 
     <!-- Tab view - Preview Cards -->
-    <div class="tab-pane fade show active" id="preview-tab-pane" role="tabpanel" aria-labelledby="preview-tab"
+    <div class="tab-pane fade" id="preview-tab-pane" role="tabpanel" aria-labelledby="preview-tab"
          tabindex="0">
         <% flashcards.forEach(function(card) { %>
             <div class="card-preview-container mb-4">
