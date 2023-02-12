@@ -74,11 +74,12 @@ $(document).on("click", ".save-button", function () {
     const flashcards = $('.single-card-container');
     const cards = [];
     const collectionId = parseInt($("#collection_id").text());
+    const subject = $("#current_subject").text();
     flashcards.each(function (index) {
         const sides = $(this).children('.summernote');
         const question = $(sides[0]).summernote('code');
         const answer = $(sides[1]).summernote('code');
-        cards.push([collectionId, question, answer]);
+        cards.push([collectionId, question, answer, subject]);
     });
     // From https://stackoverflow.com/questions/29775797/fetch-post-json-data
     fetch('/saveCardsOfCollection', {
@@ -87,7 +88,7 @@ $(document).on("click", ".save-button", function () {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({collection_id: collectionId, cards: cards})
+        body: JSON.stringify({collection_id: collectionId, cards: cards, subject: subject})
     }).then(() => window.location.reload()); // Refresh page
 });
 

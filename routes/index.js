@@ -130,16 +130,16 @@ router.get('/collections/:subject/:collection', function (req, res) {
 
         const getAllSubjectsQuery = "SELECT * FROM subjects WHERE subject_name=?;";
         const getCollectionsQuery = "SELECT * FROM collections WHERE subject_id = ? AND user_email = ? AND collection_id = ?;";
-        const getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id = ?";
+        const getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id = ? AND subject_id = ?";
 
         global.db.all(getAllSubjectsQuery, [currentSubject], function (err, subject) {
             global.db.all(getCollectionsQuery, [currentSubject, userEmail, currentCollection], function (err, collection) {
                 if (err) {
                     console.log(err);
                 } else {
-                    global.db.all(getFlashcardsQuery, [collection[0].collection_id], function (err, flashcards) {
+                    global.db.all(getFlashcardsQuery, [collection[0].collection_id, currentSubject], function (err, flashcards) {
                         const data = {
-                            subject: subject[0], collection: collection[0], collection_id: collection[0].collection_id,
+                            subject: currentSubject, collection: collection[0], collection_id: collection[0].collection_id,
                             flashcards: flashcards
                         };
                         res.render('flashcard', data);
@@ -164,19 +164,20 @@ router.post("/saveCardsOfCollection", (req, res, next) => {
 
     // Filtering out cards where Question or Answer is an empty string
     const cards = req.body.cards.filter(cardsFilterNonEmpty);
+    const subject = req.body.subject;
 
     // From https://stackoverflow.com/questions/56210899/inserting-multiple-rows-with-multiple-columns-in-node-and-sqlite3
     // Separate the values for INSERT INTO operation using map() function
-    let cardsPlaceholders = cards.map(() => "(?, ?, ?)").join(', ');
+    let cardsPlaceholders = cards.map(() => "(?, ?, ?, ?)").join(', ');
     // Flatten cards object into one array - this allows us to insert all the rows with one INSERT operation
     let flatCard = cards.flat();
 
     // Select the collection that belongs to current user using collection id
     const getCollectionQuery = "SELECT * FROM collections WHERE collection_id = ? AND user_email = ?;";
     // Delete all the flashcards so they can be reinserted to db
-    const deleteFlashCardsQuery = "DELETE FROM flashcards WHERE collection_id = ?"
+    const deleteFlashCardsQuery = "DELETE FROM flashcards WHERE collection_id = ? AND subject_id = ?"
     // Insert card
-    const insertCardQuery = 'INSERT INTO flashcards ("collection_id", "question", "answer") VALUES ' + cardsPlaceholders;
+    const insertCardQuery = 'INSERT INTO flashcards ("collection_id", "question", "answer", "subject_id") VALUES ' + cardsPlaceholders;
 
     global.db.run(
         getCollectionQuery,
@@ -185,7 +186,7 @@ router.post("/saveCardsOfCollection", (req, res, next) => {
             if (err) {
                 next(err);
             } else {
-                global.db.run(deleteFlashCardsQuery, [collectionId], function (err) {
+                global.db.run(deleteFlashCardsQuery, [collectionId, subject], function (err) {
                     if (err) {
                         next(err);
                     } else {

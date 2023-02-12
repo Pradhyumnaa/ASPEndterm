@@ -19,9 +19,10 @@ CREATE TABLE IF NOT EXISTS collections (
 
 CREATE TABLE IF NOT EXISTS flashcards (
     flashcard_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    question TEXT,
-    answer TEXT,
-    collection_id INTEGER
+    question TEXT NOT NULL,
+    answer TEXT NOT NULL,
+    collection_id INTEGER,
+    subject_id TEXT NOT NULL
 );
 
 -- Both subjects and collections will have id == 1 for the first entry,
@@ -33,10 +34,10 @@ INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP1", 4);
 INSERT INTO collections("collection_name", "subject_id", "user_email")
     VALUES ("Midterm collection", "ITP1", "nethashavithana@gmail.com"); -- id -> 1
 
-INSERT INTO flashcards ("question", "answer", "collection_id")
-    VALUES ("What is JavaScript?", "A programming language", 1 /* "Midterm collection" */),
-           ("What is Python?", "A programming language", 1),
-           ("What is Juce?", "An audio programming library for C++", 1);
+INSERT INTO flashcards ("question", "answer", "collection_id", "subject_id")
+    VALUES ("What is JavaScript?", "A programming language", 1, "ITP1" /* "Midterm collection" */),
+           ("What is Python?", "A programming language", 1, "ITP1"),
+           ("What is Juce?", "An audio programming library for C++", 1, "ITP1");
 
 -- Add the rest of the subjects
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP2", 4);
