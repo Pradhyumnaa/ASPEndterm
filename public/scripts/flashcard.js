@@ -1,6 +1,7 @@
 // Integrating summernote
 $(document).ready(function () {
     $('.summernote').summernote({
+        height: 250,
         toolbar: [
             ['font', ['bold', 'underline']],
             ['color', ['color']],
@@ -24,6 +25,7 @@ $(document).ready(function () {
             $('<div class="summernote">Question</div>')
                 .appendTo(newFlashcardDiv)
                 .summernote({
+                    height: 250,
                     toolbar: [
                         ['font', ['bold', 'underline']],
                         ['color', ['color']],
@@ -37,6 +39,7 @@ $(document).ready(function () {
             $('<div class="summernote">Answer</div>')
                 .appendTo(newFlashcardDiv)
                 .summernote({
+                    height: 250,
                     toolbar: [
                         ['font', ['bold', 'underline']],
                         ['color', ['color']],

@@ -8,7 +8,7 @@ const { auth } = require('express-openid-connect');
 const sqlite3 = require('sqlite3').verbose();
 
 const compression = require('compression');
-const bodyParser= require ("body-parser");
+const bodyParser= require("body-parser");
 
 dotenv.load();
 
@@ -29,14 +29,13 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json());
 
 //Using GZip Compression
 app.use(compression());
 
 //This is to ensure image of all sizes are accepted in the article.
-app.use(bodyParser.json({limit: '200mb'}));
-app.use(bodyParser.urlencoded({limit: '200mb', extended: true}));
+app.use(express.json({limit: '200mb'}));
+app.use(express.urlencoded({limit: '200mb', extended: true}));
 
 //Reducing Fingerprinting
 app.disable('x-powered-by')

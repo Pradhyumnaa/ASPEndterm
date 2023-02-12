@@ -73,51 +73,6 @@ router.post("/createCollection", (req, res, next) => {
     );
 });
 
-// Function to save flashcards when Save button is pressed
-router.post("/saveCardsOfCollection", (req, res, next) => {
-    const collectionId = (req.body.collection_id);
-    const cards = req.body.cards;
-    userEmail = req.oidc.user.email;
-
-    // From https://stackoverflow.com/questions/56210899/inserting-multiple-rows-with-multiple-columns-in-node-and-sqlite3
-    // Separate the values for INSERT INTO operation using map() function
-    let cardsPlaceholders = cards.map(() => "(?, ?, ?)").join(', ');
-    // Flatten cards object into one array - this allows us to insert all the rows with one INSERT operation
-    let flatCard = cards.flat();
-
-    // Select the collection that belongs to current user using collection id
-    const getCollectionQuery = "SELECT * FROM collections WHERE collection_id = ? AND user_email = ?;";
-    // Delete all the flashcards so they can be reinserted to db
-    const deleteFlashCardsQuery = "DELETE FROM flashcards WHERE collection_id = ?"
-    // Insert card
-    const insertCardQuery = 'INSERT INTO flashcards ("collection_id", "question", "answer") VALUES ' + cardsPlaceholders;
-
-    global.db.run(
-        getCollectionQuery,
-        [collectionId, userEmail],
-        function (err) {
-            if (err) {
-                next(err);
-            } else {
-                global.db.run(deleteFlashCardsQuery, [collectionId], function (err) {
-                    if (err) {
-                        next(err);
-                    } else {
-                        global.db.run(insertCardQuery, flatCard, (err) => {
-                            if (err) {
-                                next(err);
-                            } else {
-                                res.status(200).end(); // Set success
-                            }
-                        });
-                    }
-                });
-            }
-        }
-    );
-});
-
-
 //Post function that controls the "Edit Collection Name" functionality.
 router.post("/editCollection", (req, res, next) => {
 
@@ -194,6 +149,49 @@ router.get('/collections/:subject/:collection', function (req, res) {
     }
 });
 
+// Function to save flashcards when Save button is pressed
+router.post("/saveCardsOfCollection", (req, res, next) => {
+    const collectionId = (req.body.collection_id);
+    const cards = req.body.cards;
+    userEmail = req.oidc.user.email;
+
+    // From https://stackoverflow.com/questions/56210899/inserting-multiple-rows-with-multiple-columns-in-node-and-sqlite3
+    // Separate the values for INSERT INTO operation using map() function
+    let cardsPlaceholders = cards.map(() => "(?, ?, ?)").join(', ');
+    // Flatten cards object into one array - this allows us to insert all the rows with one INSERT operation
+    let flatCard = cards.flat();
+
+    // Select the collection that belongs to current user using collection id
+    const getCollectionQuery = "SELECT * FROM collections WHERE collection_id = ? AND user_email = ?;";
+    // Delete all the flashcards so they can be reinserted to db
+    const deleteFlashCardsQuery = "DELETE FROM flashcards WHERE collection_id = ?"
+    // Insert card
+    const insertCardQuery = 'INSERT INTO flashcards ("collection_id", "question", "answer") VALUES ' + cardsPlaceholders;
+
+    global.db.run(
+        getCollectionQuery,
+        [collectionId, userEmail],
+        function (err) {
+            if (err) {
+                next(err);
+            } else {
+                global.db.run(deleteFlashCardsQuery, [collectionId], function (err) {
+                    if (err) {
+                        next(err);
+                    } else {
+                        global.db.run(insertCardQuery, flatCard, (err) => {
+                            if (err) {
+                                next(err);
+                            } else {
+                                res.status(200).end(); // Set success
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    );
+});
 
 // router.get('/', function (req, res, next) {
 // res.render('index', {
