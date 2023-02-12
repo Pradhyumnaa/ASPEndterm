@@ -56,17 +56,17 @@
 
 <!-- Tabbed component -->
 <ul class="nav nav-pills nav-fill mt-4 mb-5" id="myTab" role="tablist">
+    <!-- Add/Edit Cards tab -->
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button"
+                role="tab" aria-controls="edit-tab-pane" aria-selected="false">Add/Edit Cards
+        </button>
+    </li>
     <!-- Preview Cards tab -->
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="preview-tab" data-bs-toggle="tab" data-bs-target="#preview-tab-pane"
                 type="button"
                 role="tab" aria-controls="preview-tab-pane" aria-selected="true">Preview Cards
-        </button>
-    </li>
-    <!-- Edit Cards tab -->
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button"
-                role="tab" aria-controls="edit-tab-pane" aria-selected="false">Add/Edit Cards
         </button>
     </li>
     <!-- Browse Deck tab -->
@@ -80,27 +80,6 @@
 
 <!-- Tab contents -->
 <div class="tab-content" id="myTabContent">
-
-    <!-- Tab view - Preview Cards -->
-    <div class="tab-pane fade show active" id="preview-tab-pane" role="tabpanel" aria-labelledby="preview-tab"
-         tabindex="0">
-        <% flashcards.forEach(function(card) { %>
-            <div class="card-preview-container mb-4">
-                <!-- Question card -->
-                <div class="card">
-                    <div class="card-body">
-                        <%- card.question %>
-                    </div>
-                </div>
-                <!-- Answer card -->
-                <div class="ms-4 card">
-                    <div class="card-body">
-                        <%- card.answer %>
-                    </div>
-                </div>
-            </div>
-        <% }) %>
-    </div>
 
     <!-- Tab view - Edit Cards -->
     <div class="tab-pane fade" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab" tabindex="0">
@@ -134,6 +113,27 @@
         </div>
         <!-- Button to add new flashcard -->
         <a class="me-4 mt-5 mb-4 btn btn-white" role="button" id="createNewFlashcardButton">Create New Flashcard</a>
+    </div>
+
+    <!-- Tab view - Preview Cards -->
+    <div class="tab-pane fade show active" id="preview-tab-pane" role="tabpanel" aria-labelledby="preview-tab"
+         tabindex="0">
+        <% flashcards.forEach(function(card) { %>
+            <div class="card-preview-container mb-4">
+                <!-- Question card -->
+                <div class="card">
+                    <div class="card-body">
+                        <%- card.question %>
+                    </div>
+                </div>
+                <!-- Answer card -->
+                <div class="ms-4 card">
+                    <div class="card-body">
+                        <%- card.answer %>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
     </div>
 
     <!-- Tab view - Browse Deck -->
