@@ -80,6 +80,7 @@
 
 <!-- Tab contents -->
 <div class="tab-content" id="myTabContent">
+
     <!-- Tab view - Preview Cards -->
     <div class="tab-pane fade show active" id="preview-tab-pane" role="tabpanel" aria-labelledby="preview-tab"
          tabindex="0">
@@ -98,9 +99,9 @@
                     </div>
                 </div>
             </div>
-
         <% }) %>
     </div>
+
     <!-- Tab view - Edit Cards -->
     <div class="tab-pane fade" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab" tabindex="0">
         <!-- Collection ID is in a hidden element so it can be used by the save function -->
@@ -143,9 +144,43 @@
             </svg>
             Create New Flashcard</a>
     </div>
+
     <!-- Tab view - Browse Deck -->
-    <div class="tab-pane fade" id="browse-deck-tab-pane" role="tabpanel" aria-labelledby="browse-deck-tab" tabindex="0">
-        Browse Deck
+    <div class="tab-pane fade mb-4" id="browse-deck-tab-pane" role="tabpanel" aria-labelledby="browse-deck-tab"
+         tabindex="0">
+        <!-- Adding carousel to browse flashcards -->
+        <!-- HTML from https://www.w3schools.com/howto/howto_js_quotes_slideshow.asp -->
+        <div class="slideshow-container">
+            <!-- Question/Answer -->
+            <% for (let i = 0; i < flashcards.length; i++) { %>
+                <div class="mySlides">
+                    <p>Card <%= i + 1 %> of <%= flashcards.length %></p>
+                    <div class="flashcard-question"><%- flashcards[i].question %></div>
+                    <div class="flashcard-answer" style="display: none"><%- flashcards[i].answer %></div>
+                </div>
+            <% } %>
+
+            <!-- Next/prev buttons -->
+            <a class="carousel-prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="carousel-next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+
+        <!-- Dots/bullets/indicators -->
+        <div class="carousel-dot-container mb-4">
+            <!-- For loop for button indicators -->
+            <% for (let i = 0; i < flashcards.length; i++) { %>
+                <span class="carousel-dot" onclick="currentSlide(<%= i + 1 %>)"></span>
+            <% } %>
+        </div>
+
+        <!-- Reveal Question/Answer button -->
+        <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-success btn-lg" id="reveal-answer-button">Reveal Answer</button>
+            <button type="button" style="display: none" class="btn btn-success btn-lg" id="hide-answer-button">Hide
+                Answer
+            </button>
+        </div>
+
     </div>
 </div>
 
@@ -254,6 +289,60 @@
         }).then(() => window.location.reload()); // Refresh page
     });
 
+    // Javascript for carousel slide - Browse Deck tab
+    // Adapted from https://www.w3schools.com/howto/howto_js_quotes_slideshow.asp
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function hideAnswer() {
+        $('.flashcard-answer').hide();
+        $('.flashcard-question').show();
+        $('#hide-answer-button').hide();
+        $('#reveal-answer-button').show();
+    }
+
+    function plusSlides(n) {
+        hideAnswer();
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        hideAnswer();
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        const slides = document.getElementsByClassName("mySlides");
+        const dots = document.getElementsByClassName("carousel-dot");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" carousel-active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " carousel-active";
+    }
+
+    // End of Javascript for Carousel
+
+    // Function for reveal question/answer button
+    $(document).on("click", "#reveal-answer-button", function () {
+        $('.flashcard-answer').show();
+        $('.flashcard-question').hide();
+        $('#hide-answer-button').show();
+        $('#reveal-answer-button').hide();
+    });
+    $(document).on("click", "#hide-answer-button", function () {
+        hideAnswer();
+    });
 </script>
 
 </body>

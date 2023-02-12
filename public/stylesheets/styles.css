@@ -2,18 +2,18 @@
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
 /*Setting The Font of Body to SF Pro Display*/
-body{
+body {
     font-family: 'SF Pro Display', sans-serif;
 }
 
 /*Login Page Background Colour and Font*/
-#loginPageBody{
+#loginPageBody {
     background-color: #FBFBFD;
     font-family: 'SF Pro Display', sans-serif;
 }
 
 /*Login Page Container for Logo, Text and Button*/
-#loginPageBox{
+#loginPageBox {
     background-color: #FFFFFF;
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.05);
     border-radius: 5px;
@@ -30,30 +30,30 @@ body{
 }
 
 /*Quizly Logo Image*/
-#quizlyLogoLogin{
+#quizlyLogoLogin {
     width: 5%;
 }
 
 /*Sign In To Quizly Text*/
-#signInPrompt{
+#signInPrompt {
     font-weight: 500;
 }
 
 /*Effortlessly Sign Up Text*/
-#signInInfo{
+#signInInfo {
     margin-left: 15%;
     margin-right: 15%;
     color: #888888;
 }
 
 /*Continue With Google Button Style*/
-#continueWithGoogleButton{
+#continueWithGoogleButton {
     padding-left: 6.5%;
     padding-right: 6.5%;
 }
 
 /*Setting the Margin for Subject Page Body*/
-#subjectBody{
+#subjectBody {
     margin-left: 7.5%;
     margin-right: 7.5%;
     background-color: #FBFBFD;
@@ -61,78 +61,78 @@ body{
 }
 
 /*Introduction for the Subjects Page*/
-#subjectsIntro{
+#subjectsIntro {
     color: #888888;
 }
 
-#subjectButton{
-  width: 22.5%;
-  padding-top: 5%;
-  padding-bottom: 5%;
-  font-size: 18px;
+#subjectButton {
+    width: 22.5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    font-size: 18px;
 }
 
 /*Breadcrumb Design*/
 
-.breadcrumb-item{
-  font-size: 24px;
+.breadcrumb-item {
+    font-size: 24px;
 }
 
-.breadcrumb-item a{
-  font-size: 24px;
-  text-decoration: none;
+.breadcrumb-item a {
+    font-size: 24px;
+    text-decoration: none;
 }
 
 #startQuizButton {
-  color: #0d6efd;
-  text-decoration: none;
-  font-size: 24px;
+    color: #0d6efd;
+    text-decoration: none;
+    font-size: 24px;
 }
 
 
 /*Collections Page Button Designs*/
 
-#createNewCollectionButton{
-  width: 30%;
-  padding-top: 9%;
-  padding-bottom: 9%;
-  font-size: 22px;
-  color: #888;
+#createNewCollectionButton {
+    width: 30%;
+    padding-top: 9%;
+    padding-bottom: 9%;
+    font-size: 22px;
+    color: #888;
 
-  border-width: 2px;
-  border-style: dashed;
-  border-color: #c4c4c4;
+    border-width: 2px;
+    border-style: dashed;
+    border-color: #c4c4c4;
 }
 
-#collectionGroup{
-  width: 30%;
+#collectionGroup {
+    width: 30%;
 }
 
-#collectionNameButton{
-  padding-top: 25%;
-  padding-bottom: 25%;
-  font-size: 22px;
+#collectionNameButton {
+    padding-top: 25%;
+    padding-bottom: 25%;
+    font-size: 22px;
 }
 
 /*Flashcard Page Design*/
-#createNewFlashcardButton{
-  width: 100%;
-  padding-top: 9%;
-  padding-bottom: 9%;
-  font-size: 22px;
-  color: #888;
+#createNewFlashcardButton {
+    width: 100%;
+    padding-top: 9%;
+    padding-bottom: 9%;
+    font-size: 22px;
+    color: #888;
 
-  border-width: 2px;
-  border-style: dashed;
-  border-color: #c4c4c4;
+    border-width: 2px;
+    border-style: dashed;
+    border-color: #c4c4c4;
 }
 
 .modal-header {
-  border-bottom: 0 none;
+    border-bottom: 0 none;
 }
 
 .modal-footer {
-  border-top: 0 none;
+    border-top: 0 none;
 }
 
 /*Setting rich text editors side by side in flashcard page*/
@@ -159,3 +159,72 @@ body{
     width: calc(50% - 30px);
     background-color: white;
 }
+
+
+/* Carousel CSS - from https://www.w3schools.com/howto/howto_js_quotes_slideshow.asp */
+/* Slideshow container */
+.slideshow-container {
+    position: relative;
+    background: #f1f1f1f1;
+}
+
+/* Slides */
+.mySlides {
+    display: none;
+    padding: 80px;
+    text-align: center;
+}
+
+/* Next & previous buttons */
+.carousel-prev, .carousel-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -30px;
+    padding: 16px;
+    color: #888;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+/* Position the "next button" to the right */
+.carousel-next {
+    position: absolute;
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.carousel-prev:hover, .carousel-next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+/* The dot/bullet/indicator container */
+.carousel-dot-container {
+    text-align: center;
+    padding: 20px;
+    background: #ddd;
+}
+
+/* The dots/bullets/indicators */
+.carousel-dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+/* Add a background color to the active dot/circle */
+.carousel-active, .carousel-dot:hover {
+    background-color: #717171;
+}
+
+/* End of Carousel CSS */
