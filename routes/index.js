@@ -1,6 +1,12 @@
 var router = require('express').Router();
 const {requiresAuth} = require('express-openid-connect');
 
+// Libraries to purify inputs from Summernote editors
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
+
 // Library used to convert HTML to text - so we can see if HTML from Summernote editors are empty
 const {htmlToText} = require('html-to-text');
 
@@ -157,13 +163,19 @@ function cardsFilterNonEmpty(card) {
     return htmlToText(card[1]).trim().length !== 0 && htmlToText(card[2]).trim().length !== 0;
 }
 
+// Function to purify inputs entered by users in summernote editors against XSS and DOM Clobbering attacks
+// Any scripts added to Summernote editor will be removed when Save button is clicked
+function purifyCard(card) {
+    return [card[0], DOMPurify.sanitize(card[1]), DOMPurify.sanitize(card[2]), card[3]];
+}
+
 // Function to save flashcards when Save button is pressed
 router.post("/saveCardsOfCollection", (req, res, next) => {
     const collectionId = (req.body.collection_id);
     userEmail = req.oidc.user.email;
 
     // Filtering out cards where Question or Answer is an empty string
-    const cards = req.body.cards.filter(cardsFilterNonEmpty);
+    const cards = req.body.cards.filter(cardsFilterNonEmpty).map(purifyCard);
     const subject = req.body.subject;
 
     // From https://stackoverflow.com/questions/56210899/inserting-multiple-rows-with-multiple-columns-in-node-and-sqlite3
