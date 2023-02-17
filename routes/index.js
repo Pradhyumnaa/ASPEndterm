@@ -145,7 +145,7 @@ router.get('/collections/:subject/:collection', function (req, res) {
                 } else {
                     global.db.all(getFlashcardsQuery, [collection[0].collection_id, currentSubject], function (err, flashcards) {
                         const data = {
-                            subject: currentSubject, collection: collection[0], collection_id: collection[0].collection_id,
+                            subject: subject[0], collection: collection[0], collection_id: collection[0].collection_id,
                             flashcards: flashcards
                         };
                         res.render('flashcard', data);
