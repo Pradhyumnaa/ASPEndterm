@@ -1,9 +1,9 @@
-var router = require('express').Router();
+const router = require('express').Router();
 const {requiresAuth} = require('express-openid-connect');
 
 // Libraries to purify inputs from Summernote editors
 const createDOMPurify = require('dompurify');
-const { JSDOM } = require('jsdom');
+const {JSDOM} = require('jsdom');
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
 
@@ -11,13 +11,13 @@ const DOMPurify = createDOMPurify(window);
 const {htmlToText} = require('html-to-text');
 
 //Global Variable for the Current User's Email
-var userEmail = "";
+let userEmail = "";
 
 //Global Variable to Identify the current subject page.
-var currentSubject = 0;
+let currentSubject = 0;
 
 //Global Variable to Identify the current collection page.
-var currentCollection = 0;
+let currentCollection = 0;
 
 //Get function for the Login Page if not Authenticated. Subjects page if Authenticated.
 router.get('/', function (req, res, next) {
@@ -39,7 +39,7 @@ router.get('/', function (req, res, next) {
 });
 
 
-//Get function that controls the collections page
+// Get function that controls the collections page
 router.get('/collections/:subject', function (req, res) {
     if (req.oidc.isAuthenticated()) {
         currentSubject = req.params.subject;
@@ -62,7 +62,7 @@ router.get('/collections/:subject', function (req, res) {
 });
 
 
-//Post function that controls the "Create Collection" functionality.
+// Post function that controls the "Create Collection" functionality.
 router.post("/createCollection", (req, res, next) => {
 
     collectionTitle = (req.body.collectionName);
@@ -82,7 +82,7 @@ router.post("/createCollection", (req, res, next) => {
     );
 });
 
-//Post function that controls the "Edit Collection Name" functionality.
+// Post function that controls the "Edit Collection Name" functionality.
 router.post("/editCollection", (req, res, next) => {
 
     collectionTitle = (req.body.collectionName);
@@ -105,10 +105,10 @@ router.post("/editCollection", (req, res, next) => {
 });
 
 
-//Post function that controls the "Delete Collection" functionality.
+// Post function that controls the "Delete Collection" functionality.
 router.post("/deleteCollection", (req, res, next) => {
 
-    collectionID = Object.keys(req.body)[0];
+    let collectionID = Object.keys(req.body)[0];
 
     var deleteCollectionQuery = "DELETE FROM collections WHERE collection_id = ? AND user_email = ? AND subject_id = ?;";
     // TODO delete all cards of a collection as well
@@ -127,8 +127,8 @@ router.post("/deleteCollection", (req, res, next) => {
 });
 
 
-//Get function that goes to the flashcard page of the respective collection
-router.get('/collections/:subject/:collection', function (req, res) {
+// Get function that goes to the flashcard page of the respective collection
+router.get('/collections/:subject/:collection', function (req, res, next) {
     if (req.oidc.isAuthenticated()) {
         currentSubject = req.params.subject;
         currentCollection = req.params.collection;
@@ -141,7 +141,7 @@ router.get('/collections/:subject/:collection', function (req, res) {
         global.db.all(getAllSubjectsQuery, [currentSubject], function (err, subject) {
             global.db.all(getCollectionsQuery, [currentSubject, userEmail, currentCollection], function (err, collection) {
                 if (err || collection.length !== 1 || subject.length !== 1) {
-                    console.log(err);
+                    next(err || "Invalid request");
                 } else {
                     global.db.all(getFlashcardsQuery, [collection[0].collection_id, currentSubject], function (err, flashcards) {
                         const data = {
@@ -159,32 +159,71 @@ router.get('/collections/:subject/:collection', function (req, res) {
 });
 
 
-//Get function that goes to the Quiz page of the respective collection
-router.get('/quiz/:subject/:collection', function (req, res) {
-    if (req.oidc.isAuthenticated()) {
-        currentSubject = req.params.subject;
-        currentCollection = req.params.collection;
-        userEmail = req.oidc.user.email;
+const todayStartDay = () => {
+    let start = new Date();
+    start.setUTCHours(0, 0, 0, 0);
+    return Math.floor(start.getTime() / 1000);
+};
 
-        const getAllSubjectsQuery = "SELECT * FROM subjects WHERE subject_name=?;";
-        const getCollectionsQuery = "SELECT * FROM collections WHERE subject_id = ? AND user_email = ? AND collection_id = ?;";
-        const getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id = ? AND subject_id = ?";
+// This function is called when user clicks the Study All or Study Scheduled button
+const getQuiz = (req, res, next, onlyScheduled) => {
+    currentSubject = req.params.subject;
+    currentCollection = req.params.collection;
+    userEmail = req.oidc.user.email;
 
-        global.db.all(getAllSubjectsQuery, [currentSubject], function (err, subject) {
-            global.db.all(getCollectionsQuery, [currentSubject, userEmail, currentCollection], function (err, collection) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    global.db.all(getFlashcardsQuery, [collection[0].collection_id, currentSubject], function (err, flashcards) {
-                        const data = {
-                            subject: subject[0], collection: collection[0], collection_id: collection[0].collection_id,
-                            flashcards: flashcards
-                        };
-                        res.render('quiz', data);
-                    });
-                }
-            });
+    const getAllSubjectsQuery = "SELECT * FROM subjects WHERE subject_name=?;";
+    const getCollectionsQuery = "SELECT * FROM collections WHERE subject_id = ? AND" +
+        " user_email = ? AND collection_id = ?;";
+
+    let getFlashcardsQuery;
+
+    // Filtering flashcards - if user clicks on Study Scheduled, only the cards that are scheduled by the SM2
+    //  algorithm will be shown
+    if (onlyScheduled) {
+        getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id = ? AND " +
+            "subject_id = ? AND (sm2_next_scheduled = 0 OR sm2_next_scheduled <= ?)";
+    } else {
+        getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id = ? " +
+            "AND subject_id = ?";
+
+    }
+
+    global.db.all(getAllSubjectsQuery, [currentSubject], (err, subject) => {
+        global.db.all(getCollectionsQuery, [currentSubject, userEmail, currentCollection], (err, collection) => {
+            if (err || collection.length !== 1 || subject.length !== 1) {
+                next(err || "Invalid request");
+            } else {
+                const params = onlyScheduled ?
+                    [collection[0].collection_id, currentSubject, todayStartDay()] :
+                    [collection[0].collection_id, currentSubject];
+                global.db.all(getFlashcardsQuery, params, (err, flashcards) => {
+                    const data = {
+                        subject: subject[0], collection: collection[0], collection_id: collection[0].collection_id,
+                        flashcards: flashcards
+                    };
+                    res.render('quiz', data);
+                });
+            }
         });
+    });
+}
+
+// Route used if user selects Study All quiz option
+// User will see all the flashcards in the collection
+router.get('/quiz/:subject/:collection', (req, res, next) => {
+    if (req.oidc.isAuthenticated()) {
+        getQuiz(req, res, next, false);
+    } else {
+        res.redirect('/');
+    }
+});
+
+
+// Route used if user selects Study Scheduled quiz option
+// The user will only see the flashcards that are scheduled for that day using the SM2 algorithm
+router.get('/scheduled-quiz/:subject/:collection', (req, res, next) => {
+    if (req.oidc.isAuthenticated()) {
+        getQuiz(req, res, next, true);
     } else {
         res.redirect('/');
     }
@@ -192,15 +231,17 @@ router.get('/quiz/:subject/:collection', function (req, res) {
 
 
 // Function that uses html-to-text library to check if a Question or Answer summernote editor is empty
-function cardsFilterNonEmpty(card) {
+const cardsFilterNonEmpty = (card) => {
     return htmlToText(card[1]).trim().length !== 0 && htmlToText(card[2]).trim().length !== 0;
 }
 
 // Function to purify inputs entered by users in summernote editors against XSS and DOM Clobbering attacks
 // Any scripts added to Summernote editor will be removed when Save button is clicked
-function purifyCard(card) {
-    return [card[0], DOMPurify.sanitize(card[1]), DOMPurify.sanitize(card[2]), card[3],
-        card[4], card[5], card[6], card[7]];
+const purifyCard = (card) => {
+    const purified = card.slice();
+    purified[1] = DOMPurify.sanitize(purified[1]);
+    purified[2] = DOMPurify.sanitize(purified[1]);
+    return purified;
 }
 
 // Function to save flashcards when Save button is pressed
@@ -219,20 +260,24 @@ router.post("/saveCardsOfCollection", (req, res, next) => {
     let flatCard = cards.flat();
 
     // Select the collection that belongs to current user using collection id
-    const getCollectionQuery = "SELECT * FROM collections WHERE collection_id = ? AND user_email = ?;";
-    // Delete all the flashcards so they can be reinserted to db
+    const getCollectionQuery = "SELECT * FROM collections WHERE collection_id = ? AND user_email = ?";
+    // Delete all the flashcards, so they can be reinserted to db
     const deleteFlashCardsQuery = "DELETE FROM flashcards WHERE collection_id = ? AND subject_id = ?"
     // Insert card
-    const insertCardQuery = 'INSERT INTO flashcards ("collection_id", "question", "answer", "subject_id", "sm2_repetitions", "sm2_interval", "sm2_easiness", "sm2_next_scheduled") VALUES ' + cardsPlaceholders;
+    const insertCardQuery = 'INSERT INTO flashcards ("collection_id", "question", "answer",' +
+        ' "subject_id", "sm2_repetitions", "sm2_interval", "sm2_easiness", "sm2_next_scheduled") VALUES ' +
+        cardsPlaceholders;
 
     global.db.run(
         getCollectionQuery,
         [collectionId, userEmail],
-        function (err) {
-            if (err) {
-                next(err);
+        (err, collectionData) => {
+            // If the collection data is not present then it is an invalid request
+            // Example scenario: This collection does not belong to this student
+            if (err || collectionData.length !== 1) {
+                next(err || "Invalid request");
             } else {
-                global.db.run(deleteFlashCardsQuery, [collectionId, subject], function (err) {
+                global.db.run(deleteFlashCardsQuery, [collectionId, subject], (err) => {
                     if (err) {
                         next(err);
                     } else {
@@ -249,6 +294,39 @@ router.post("/saveCardsOfCollection", (req, res, next) => {
         }
     );
 });
+
+// Function to update database with SM2 state of a card when user clicks a confidence number button
+router.post("/saveCardSM2State", (req, res, next) => {
+    const collectionId = req.body.collectionId;
+    const subject = req.body.subject;
+    userEmail = req.oidc.user.email;
+    // Select the collection that belongs to current user using collection id
+    const getCollectionQuery = "SELECT * FROM collections WHERE collection_id = ? AND user_email = ?";
+    // Update SM2 state information of the card
+    const updateFlashcardSM2Query = "UPDATE flashcards SET sm2_repetitions=?, sm2_interval=?," +
+        " sm2_easiness=?, sm2_next_scheduled=? WHERE collection_id=? AND subject_id=? AND flashcard_id=?";
+
+    global.db.run(
+        getCollectionQuery,
+        [collectionId, userEmail],
+        (err) => {
+            if (err) {
+                next(err);
+            } else {
+                global.db.run(updateFlashcardSM2Query,
+                    [req.body.sm2Rep, req.body.sm2Interval, req.body.sm2Easiness, req.body.sm2NextSchedule,
+                        collectionId, subject, req.body.flashcardIndex], (err) => {
+                        if (err) {
+                            next(err);
+                        } else {
+                            res.status(200).end(); // Set success
+                        }
+                    });
+            }
+        }
+    );
+});
+
 
 // router.get('/', function (req, res, next) {
 // res.render('index', {

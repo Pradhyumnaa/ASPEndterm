@@ -48,7 +48,10 @@
         </nav>
     </div>
     <div class="col-6 text-end">
-        <a id="startQuizButton" href="/quiz/<%= subject.subject_name %>/<%= collection_id %>">Start Collection Quiz
+        <a class="quiz-button" href="/quiz/<%= subject.subject_name %>/<%= collection_id %>">Study All
+            <i class="bi bi-play-circle-fill"></i>
+        </a>
+        <a class="quiz-button" href="/scheduled-quiz/<%= subject.subject_name %>/<%= collection_id %>">Study Scheduled
             <i class="bi bi-play-circle-fill"></i>
         </a>
     </div>
