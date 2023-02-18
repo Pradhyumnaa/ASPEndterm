@@ -140,7 +140,7 @@ router.get('/collections/:subject/:collection', function (req, res) {
 
         global.db.all(getAllSubjectsQuery, [currentSubject], function (err, subject) {
             global.db.all(getCollectionsQuery, [currentSubject, userEmail, currentCollection], function (err, collection) {
-                if (err) {
+                if (err || collection.length !== 1 || subject.length !== 1) {
                     console.log(err);
                 } else {
                     global.db.all(getFlashcardsQuery, [collection[0].collection_id, currentSubject], function (err, flashcards) {
@@ -199,7 +199,8 @@ function cardsFilterNonEmpty(card) {
 // Function to purify inputs entered by users in summernote editors against XSS and DOM Clobbering attacks
 // Any scripts added to Summernote editor will be removed when Save button is clicked
 function purifyCard(card) {
-    return [card[0], DOMPurify.sanitize(card[1]), DOMPurify.sanitize(card[2]), card[3]];
+    return [card[0], DOMPurify.sanitize(card[1]), DOMPurify.sanitize(card[2]), card[3],
+        card[4], card[5], card[6], card[7]];
 }
 
 // Function to save flashcards when Save button is pressed
@@ -213,7 +214,7 @@ router.post("/saveCardsOfCollection", (req, res, next) => {
 
     // From https://stackoverflow.com/questions/56210899/inserting-multiple-rows-with-multiple-columns-in-node-and-sqlite3
     // Separate the values for INSERT INTO operation using map() function
-    let cardsPlaceholders = cards.map(() => "(?, ?, ?, ?)").join(', ');
+    let cardsPlaceholders = cards.map(() => "(?, ?, ?, ?, ?, ?, ?, ?)").join(', ');
     // Flatten cards object into one array - this allows us to insert all the rows with one INSERT operation
     let flatCard = cards.flat();
 
@@ -222,7 +223,7 @@ router.post("/saveCardsOfCollection", (req, res, next) => {
     // Delete all the flashcards so they can be reinserted to db
     const deleteFlashCardsQuery = "DELETE FROM flashcards WHERE collection_id = ? AND subject_id = ?"
     // Insert card
-    const insertCardQuery = 'INSERT INTO flashcards ("collection_id", "question", "answer", "subject_id") VALUES ' + cardsPlaceholders;
+    const insertCardQuery = 'INSERT INTO flashcards ("collection_id", "question", "answer", "subject_id", "sm2_repetitions", "sm2_interval", "sm2_easiness", "sm2_next_scheduled") VALUES ' + cardsPlaceholders;
 
     global.db.run(
         getCollectionQuery,

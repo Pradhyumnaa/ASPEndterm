@@ -20,6 +20,8 @@ $(document).ready(function () {
 
             let newFlashcardDiv = document.createElement('div');
             newFlashcardDiv.classList.add('single-card-container', 'mb-4');
+            $('<div class="sm2-metadata" style="display: none">0,1,2.5,0</div>')
+                .appendTo(newFlashcardDiv);
 
             // Question editor
             $('<div class="summernote">Question</div>')
@@ -76,10 +78,19 @@ $(document).on("click", ".save-button", function () {
     const collectionId = parseInt($("#collection_id").text());
     const subject = $("#current_subject").text();
     flashcards.each(function (index) {
+        // Getting sm2 metadata elements and pushing to card array, so it can be added to the database
+        // This ensures that the card scheduling state remains intact
+        const sm2MetadataElement = $(this).children('.sm2-metadata')[0];
+        const sm2Metadata = $(sm2MetadataElement).text().split(",");
+        const sm2Rep = parseInt(sm2Metadata[0]);
+        const sm2Interval = parseFloat(sm2Metadata[1]);
+        const sm2Easiness = parseFloat(sm2Metadata[2]);
+        const sm2NextSchedule = parseInt(sm2Metadata[3]);
+        // Getting the HTML inputs from Question and Answer editors and pushing to card array
         const sides = $(this).children('.summernote');
         const question = $(sides[0]).summernote('code');
         const answer = $(sides[1]).summernote('code');
-        cards.push([collectionId, question, answer, subject]);
+        cards.push([collectionId, question, answer, subject, sm2Rep, sm2Interval, sm2Easiness, sm2NextSchedule]);
     });
     // From https://stackoverflow.com/questions/29775797/fetch-post-json-data
     fetch('/saveCardsOfCollection', {
