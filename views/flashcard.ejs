@@ -72,13 +72,6 @@
                 role="tab" aria-controls="preview-tab-pane" aria-selected="true">Preview Cards
         </button>
     </li>
-    <!-- Browse Deck tab -->
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="browse-deck-tab" data-bs-toggle="tab" data-bs-target="#browse-deck-tab-pane"
-                type="button"
-                role="tab" aria-controls="browse-deck-tab-pane" aria-selected="false">Browse Deck
-        </button>
-    </li>
 </ul>
 
 <!-- Tab contents -->
@@ -137,44 +130,6 @@
                 </div>
             </div>
         <% }) %>
-    </div>
-
-    <!-- Tab view - Browse Deck -->
-    <div class="tab-pane fade mb-4" id="browse-deck-tab-pane" role="tabpanel" aria-labelledby="browse-deck-tab"
-         tabindex="0">
-        <!-- Adding carousel to browse flashcards -->
-        <!-- HTML from https://www.w3schools.com/howto/howto_js_quotes_slideshow.asp -->
-        <div class="slideshow-container">
-            <!-- Question/Answer -->
-            <% for (let i = 0; i < flashcards.length; i++) { %>
-                <div class="mySlides">
-                    <p>Card <%= i + 1 %> of <%= flashcards.length %></p>
-                    <div class="flashcard-question"><%- flashcards[i].question %></div>
-                    <div class="flashcard-answer" style="display: none"><%- flashcards[i].answer %></div>
-                </div>
-            <% } %>
-
-            <!-- Next/prev buttons -->
-            <a class="carousel-prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="carousel-next" onclick="plusSlides(1)">&#10095;</a>
-        </div>
-
-        <!-- Dots/bullets/indicators -->
-        <div class="carousel-dot-container mb-4">
-            <!-- For loop for button indicators -->
-            <% for (let i = 0; i < flashcards.length; i++) { %>
-                <span class="carousel-dot" onclick="currentSlide(<%= i + 1 %>)"></span>
-            <% } %>
-        </div>
-
-        <!-- Reveal Question/Answer button -->
-        <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-success btn-lg" id="reveal-answer-button">Reveal Answer</button>
-            <button type="button" style="display: none" class="btn btn-danger btn-lg" id="hide-answer-button">Hide
-                Answer
-            </button>
-        </div>
-
     </div>
 </div>
 
