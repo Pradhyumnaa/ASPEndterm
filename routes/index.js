@@ -268,7 +268,7 @@ router.post("/saveCardsOfCollection", (req, res, next) => {
         ' "subject_id", "sm2_repetitions", "sm2_interval", "sm2_easiness", "sm2_next_scheduled") VALUES ' +
         cardsPlaceholders;
 
-    global.db.run(
+    global.db.all(
         getCollectionQuery,
         [collectionId, userEmail],
         (err, collectionData) => {
