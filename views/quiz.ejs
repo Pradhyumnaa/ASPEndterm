@@ -48,19 +48,17 @@
         <% if (collection.collection_name === "*") { %>
             <a class="quiz-button" href="/collections/<%= subject.subject_name %>">Back to
                 Subject
-                <i class="bi bi-play-circle-fill"></i>
             </a>
         <% } else { %>
             <a class="quiz-button" href="/collections/<%= subject.subject_name %>/<%= collection.collection_id %>">Back to
                 Collection
-                <i class="bi bi-play-circle-fill"></i>
             </a>
         <% } %>
     </div>
 </div>
 
 
-<div class="mb-4">
+<div class="me-4 mt-5 mb-4">
     <!-- Subject name is a hidden element, so it can be used by the markCard() function -->
     <div style="display: none" id="current_subject"><%= subject.subject_name %></div>
 

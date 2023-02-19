@@ -15,25 +15,26 @@
 </head>
 
 <body id="subjectBody">
-<nav class="pt-5 pb-4 navbar navbar-expand-lg bg-body-white">
-    <a class="navbar-brand" href="/">
-        <img src="/images/navbarlogo.png" alt="Bootstrap" id="navbarLogo" width="121" height="50">
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a class="me-5 nav-link disabled"><%= user.nickname %></a>
-            </li>
-            <li class="nav-item">
-                <a class="ps-5 pe-5 btn btn-primary" href="/logout" role="button">Log Out</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+    <nav class="pt-5 pb-4 navbar navbar-expand-lg bg-body-white">
+        <a class="navbar-brand" href="/">
+            <img src="/images/navbarlogo.png" alt="Bootstrap" id="navbarLogo" width="121" height="50">
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="me-5 nav-link disabled"><%= user.nickname %></a>
+                </li>
+                <li class="nav-item">
+                    <a class="ps-5 pe-5 btn btn-primary" href="/logout" role="button">Log Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
 <!-- Breadcrumbs component -->
 <div class="mt-5 row">
@@ -48,12 +49,16 @@
         </nav>
     </div>
     <div class="col-6 text-end">
-        <a class="quiz-button" href="/quiz/<%= subject.subject_name %>/<%= collection_id %>">Study All
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <a id="quiz-button" class="btn btn-outline-primary" href="/quiz/<%= subject.subject_name %>" role="button">Study All <i class="ms-1 bi bi-play-circle-fill"></i></a>
+            <a id="quiz-button" class="btn btn-outline-primary" href="/scheduled-quiz/<%= subject.subject_name %>" role="button">Study Selected <i class="ms-1 bi bi-play-circle-fill"></i></a>
+        </div>
+        <!-- <a class="quiz-button" href="/quiz/<%= subject.subject_name %>">Study All
             <i class="bi bi-play-circle-fill"></i>
         </a>
-        <a class="quiz-button" href="/scheduled-quiz/<%= subject.subject_name %>/<%= collection_id %>">Study Scheduled
+        <a class="quiz-button" href="/scheduled-quiz/<%= subject.subject_name %>">Study Scheduled
             <i class="bi bi-play-circle-fill"></i>
-        </a>
+        </a> -->
     </div>
 </div>
 
