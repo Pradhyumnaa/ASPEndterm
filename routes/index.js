@@ -141,7 +141,7 @@ router.get('/collections/:subject/:collection', function (req, res, next) {
         global.db.all(getAllSubjectsQuery, [currentSubject], function (err, subject) {
             global.db.all(getCollectionsQuery, [currentSubject, userEmail, currentCollection], function (err, collection) {
                 if (err || collection.length !== 1 || subject.length !== 1) {
-                    next(err || "Invalid request");
+                    res.redirect('/');
                 } else {
                     global.db.all(getFlashcardsQuery, [collection[0].collection_id, currentSubject], function (err, flashcards) {
                         const data = {
@@ -191,7 +191,7 @@ const getQuiz = (req, res, next, onlyScheduled) => {
     global.db.all(getAllSubjectsQuery, [currentSubject], (err, subject) => {
         global.db.all(getCollectionsQuery, [currentSubject, userEmail, currentCollection], (err, collection) => {
             if (err || collection.length !== 1 || subject.length !== 1) {
-                next(err || "Invalid request");
+                res.redirect('/');
             } else {
                 const params = onlyScheduled ?
                     [collection[0].collection_id, currentSubject, todayStartDay()] :
@@ -254,7 +254,7 @@ const getSubjectQuiz = (req, res, next, onlyScheduled) => {
     global.db.all(getAllSubjectsQuery, [currentSubject], (err, subject) => {
         global.db.all(getCollectionsQuery, [currentSubject, userEmail], (err, collection) => {
             if (err || collection.length === 0 || subject.length !== 1) {
-                next(err || "Invalid request");
+                res.redirect('/');
             } else {
                 const subjectUserCollections = collection.map(x => "" + x.collection_id).join(", ");
                 getFlashcardsQuery = getFlashcardsQuery.replace("$COLLECTIONS$", subjectUserCollections);
