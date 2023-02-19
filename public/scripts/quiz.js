@@ -31,6 +31,9 @@ function markCard(confidence) {
     const cardInformationElement = currentSlide.children(".sm2-metadata")[0];
     // Get metadata as a String[] from the metadata element
     const cardInformation = $(cardInformationElement).text().split(",");
+    // Get card's collection_id
+    const cardCollectionInfoElement = currentSlide.children(".flashcard-collection-id")[0];
+    const cardCollectionId = parseInt($(cardCollectionInfoElement).text());
 
     // Split array content to multiple variables
     let sm2Rep = parseInt(cardInformation[0]);
@@ -82,7 +85,7 @@ function markCard(confidence) {
             sm2Interval: sm2Interval,
             sm2NextSchedule: sm2NextSchedule,
             flashcardIndex: flashcardIndex,
-            collectionId: parseInt($("#collection_id").text()),
+            collectionId: cardCollectionId,
             subject: $("#current_subject").text()
         })
     }).then(() => {

@@ -198,8 +198,7 @@ const getQuiz = (req, res, next, onlyScheduled) => {
                     [collection[0].collection_id, currentSubject];
                 global.db.all(getFlashcardsQuery, params, (err, flashcards) => {
                     const data = {
-                        subject: subject[0], collection: collection[0], collection_id: collection[0].collection_id,
-                        flashcards: flashcards
+                        subject: subject[0], collection: collection[0], flashcards: flashcards
                     };
                     res.render('quiz', data);
                 });
@@ -230,6 +229,64 @@ router.get('/scheduled-quiz/:subject/:collection', (req, res, next) => {
 });
 
 
+// This function is called when user clicks the Study All or Study Scheduled button for a subject
+const getSubjectQuiz = (req, res, next, onlyScheduled) => {
+    currentSubject = req.params.subject;
+    userEmail = req.oidc.user.email;
+
+    const getAllSubjectsQuery = "SELECT * FROM subjects WHERE subject_name = ?;";
+    const getCollectionsQuery = "SELECT * FROM collections WHERE subject_id = ? AND" +
+        " user_email = ?";
+
+    let getFlashcardsQuery;
+
+    // Filtering flashcards - if user clicks on Study Scheduled, only the cards that are scheduled by the SM2
+    //  algorithm will be shown
+    if (onlyScheduled) {
+        getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id IN ($COLLECTIONS$) AND " +
+            "subject_id = ? AND (sm2_next_scheduled = 0 OR sm2_next_scheduled <= ?)";
+    } else {
+        getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id IN ($COLLECTIONS$) " +
+            "AND subject_id = ?";
+
+    }
+
+    global.db.all(getAllSubjectsQuery, [currentSubject], (err, subject) => {
+        global.db.all(getCollectionsQuery, [currentSubject, userEmail], (err, collection) => {
+            if (err || collection.length === 0 || subject.length !== 1) {
+                next(err || "Invalid request");
+            } else {
+                const subjectUserCollections = collection.map(x => "" + x.collection_id).join(", ");
+                getFlashcardsQuery = getFlashcardsQuery.replace("$COLLECTIONS$", subjectUserCollections);
+                const params = onlyScheduled ? [currentSubject, todayStartDay()] : [currentSubject];
+                global.db.all(getFlashcardsQuery, params, (err, flashcards) => {
+                    const data = {
+                        subject: subject[0], collection: {"collection_name": "*"}, flashcards: flashcards
+                    };
+                    res.render('quiz', data);
+                });
+            }
+        });
+    });
+}
+
+router.get('/quiz/:subject', (req, res, next) => {
+    if (req.oidc.isAuthenticated()) {
+        getSubjectQuiz(req, res, next, false);
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.get('/scheduled-quiz/:subject', (req, res, next) => {
+    if (req.oidc.isAuthenticated()) {
+        getSubjectQuiz(req, res, next, true);
+    } else {
+        res.redirect('/');
+    }
+});
+
+
 // Function that uses html-to-text library to check if a Question or Answer summernote editor is empty
 const cardsFilterNonEmpty = (card) => {
     return htmlToText(card[1]).trim().length !== 0 && htmlToText(card[2]).trim().length !== 0;
@@ -240,7 +297,7 @@ const cardsFilterNonEmpty = (card) => {
 const purifyCard = (card) => {
     const purified = card.slice();
     purified[1] = DOMPurify.sanitize(purified[1]);
-    purified[2] = DOMPurify.sanitize(purified[1]);
+    purified[2] = DOMPurify.sanitize(purified[2]);
     return purified;
 }
 

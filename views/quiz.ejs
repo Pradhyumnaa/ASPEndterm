@@ -45,17 +45,23 @@
         </nav>
     </div>
     <div class="col-6 text-end">
-        <a class="quiz-button" href="/collections/<%= subject.subject_name %>/<%= collection_id %>">Back to
-            Collection
-            <i class="bi bi-play-circle-fill"></i>
-        </a>
+        <% if (collection.collection_name === "*") { %>
+            <a class="quiz-button" href="/collections/<%= subject.subject_name %>">Back to
+                Subject
+                <i class="bi bi-play-circle-fill"></i>
+            </a>
+        <% } else { %>
+            <a class="quiz-button" href="/collections/<%= subject.subject_name %>/<%= collection.collection_id %>">Back to
+                Collection
+                <i class="bi bi-play-circle-fill"></i>
+            </a>
+        <% } %>
     </div>
 </div>
 
 
 <div class="mb-4">
-    <!-- Collection ID, Subject name are hidden elements so they can be used by the markCard() function -->
-    <div style="display: none" id="collection_id"><%= collection_id %></div>
+    <!-- Subject name is a hidden element, so it can be used by the markCard() function -->
     <div style="display: none" id="current_subject"><%= subject.subject_name %></div>
 
     <!-- Start quiz from flashcards -->
@@ -73,6 +79,8 @@
                 <!-- Hidden div containing super memo 2 implementation state -->
                 <div class="sm2-metadata" style="display: none"><%= card.sm2_repetitions %>,<%= card.sm2_interval %>
                     ,<%= card.sm2_easiness %>,<%= card.sm2_next_scheduled %>,<%= card.flashcard_id %></div>
+                <!-- Hidden div containing collection_id -->
+                <div class="flashcard-collection-id" style="display: none"><%= card.collection_id %></div>
                 <p>Card <%= i + 1 %> of <%= flashcards.length %></p>
                 <div class="flashcard-question"><%- card.question %></div>
                 <div class="flashcard-answer" style="display: none"><%- card.answer %></div>
