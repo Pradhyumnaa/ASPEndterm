@@ -35,124 +35,127 @@
             </ul>
         </div>
     </nav>
-
-<!-- Breadcrumbs component -->
-<div class="mt-5 row">
-    <div class="col-6">
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Level <%= subject.level_id %></a></li>
-                <li class="breadcrumb-item"><a
-                            href="/collections/<%= subject.subject_name %>"><%= subject.subject_name %></a></li>
-                <li class="breadcrumb-item active" aria-current="page"><%= collection.collection_name %></li>
-            </ol>
-        </nav>
-    </div>
-    <div class="col-6 text-end">
+    
+    <!-- Breadcrumbs component -->
+    <div class="mt-5 row">
+        <div class="col-6">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/">Level <%= subject.level_id %></a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/collections/<%= subject.subject_name %>"><%= subject.subject_name %></a>
+                    </li>
+                    
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <%= collection.collection_name %>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        
+        <div class="col-6 text-end">
             <a id="quiz-button" class="btn btn-primary" href="/quiz/<%= subject.subject_name %>/<%= collection.collection_id %>" role="button">Study All</a>
             <a id="quiz-button" class="btn btn-primary" href="/scheduled-quiz/<%= subject.subject_name %>/<%= collection.collection_id %>" role="button">SM2: Study Scheduled</a>
-
-        <!-- <div class="btn-group" role="group" aria-label="Basic outlined example">
-            <a id="quiz-button" class="btn btn-outline-primary" href="/quiz/<%= subject.subject_name %>/<%= collection.collection_id %>" role="button">Study All</i></a>
-            <a id="quiz-button" class="btn btn-outline-primary" href="/scheduled-quiz/<%= subject.subject_name %>/<%= collection.collection_id %>" role="button">Study Selected</i></a>
-        </div> -->
-        
-        <!-- <a class="quiz-button" href="/quiz/<%= subject.subject_name %>/<%= collection.collection_id %>">Study All
-            <i class="bi bi-play-circle-fill"></i>
-        </a>
-        <a class="quiz-button" href="/scheduled-quiz/<%= subject.subject_name %>/<%= collection.collection_id %>">Study Scheduled
-            <i class="bi bi-play-circle-fill"></i>
-        </a> -->
-    </div>
-</div>
-
-<!-- Tabbed component -->
-<ul class="nav nav-pills nav-fill mt-4 mb-5" id="myTab" role="tablist">
-    <!-- Add/Edit Cards tab -->
-    <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button"
-                role="tab" aria-controls="edit-tab-pane" aria-selected="false">Add/Edit Cards
-        </button>
-    </li>
-    <!-- Preview Cards tab -->
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="preview-tab" data-bs-toggle="tab" data-bs-target="#preview-tab-pane"
-                type="button"
-                role="tab" aria-controls="preview-tab-pane" aria-selected="true">Preview Cards
-        </button>
-    </li>
-</ul>
-
-<!-- Tab contents -->
-<div class="tab-content" id="myTabContent">
-    <!-- Tab view - Edit Cards -->
-    <div class="tab-pane fade show active" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab" tabindex="0">
-        <!-- Collection ID is in a hidden element so it can be used by the save function -->
-        <div style="display: none" id="collection_id"><%= collection_id %></div>
-        <div style="display: none" id="current_subject"><%= subject.subject_name %></div>
-        <!-- Save button -->
-        <div class="clearfix mb-4">
-            <button type="button" class="btn btn-success float-end save-button">
-                <i class="bi bi-save"></i>
-                &nbsp; Save changes
-            </button>
+            
+            <!-- <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <a id="quiz-button" class="btn btn-outline-primary" href="/quiz/<%= subject.subject_name %>/<%= collection.collection_id %>" role="button">Study All</i></a>
+                <a id="quiz-button" class="btn btn-outline-primary" href="/scheduled-quiz/<%= subject.subject_name %>/<%= collection.collection_id %>" role="button">Study Selected</i></a>
+            </div> -->
+            
+            <!-- <a class="quiz-button" href="/quiz/<%= subject.subject_name %>/<%= collection.collection_id %>">Study All
+                <i class="bi bi-play-circle-fill"></i>
+            </a>
+            
+            <a class="quiz-button" href="/scheduled-quiz/<%= subject.subject_name %>/<%= collection.collection_id %>">Study Scheduled
+                <i class="bi bi-play-circle-fill"></i>
+            </a> -->
         </div>
-        <!-- Container to hold all rich text editors -->
-        <div class="mb-4 multi-card-container">
-            <!-- Container for rich text editors -->
+    </div>
+    
+    <!-- Tabbed component -->
+    <ul class="nav nav-pills nav-fill mt-4 mb-5" id="myTab" role="tablist">
+        <!-- Add/Edit Cards tab -->
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button" role="tab" aria-controls="edit-tab-pane" aria-selected="false">Add/Edit Cards</button>
+        </li>
+        
+        <!-- Preview Cards tab -->
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="preview-tab" data-bs-toggle="tab" data-bs-target="#preview-tab-pane" type="button" role="tab" aria-controls="preview-tab-pane" aria-selected="true">Preview Cards</button>
+        </li>
+    </ul>
+    
+    <!-- Tab contents -->
+    <div class="tab-content" id="myTabContent">
+        <!-- Tab view - Edit Cards -->
+        <div class="tab-pane fade show active" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab" tabindex="0">
+            <!-- Collection ID is in a hidden element so it can be used by the save function -->
+            <div style="display: none" id="collection_id"><%= collection_id %></div>
+            <div style="display: none" id="current_subject"><%= subject.subject_name %></div>
+            <!-- Save button -->
+            <div class="clearfix mb-4">
+                <button type="button" class="btn btn-success float-end save-button">
+                    <i class="bi bi-save"></i>
+                    &nbsp; Save changes
+                </button>
+            </div>
+            
+            <!-- Container to hold all rich text editors -->
+            <div class="mb-4 multi-card-container">
+                <!-- Container for rich text editors -->
+                <% flashcards.forEach(function(card) { %>
+                    <div class="single-card-container mb-4">
+                        <!-- Hidden div containing super memo 2 implementation state -->
+                        <div class="sm2-metadata" style="display: none"><%= card.sm2_repetitions %>,<%= card.sm2_interval %>,<%= card.sm2_easiness %>,<%= card.sm2_next_scheduled %></div>
+                        <!-- Summernote editors for Question and Answer -->
+                        <div class="summernote"><%- card.question %></div>
+                        <div class="summernote"><%- card.answer %></div>
+                        <!-- Delete card button -->
+                        <div>
+                            <button type="button" class="btn btn-danger delete-card-btn">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+            <!-- Button to add new flashcard -->
+            <a class="me-4 mt-5 mb-4 btn btn-white" role="button" id="createNewFlashcardButton">Create New Flashcard</a>
+        </div>
+        
+        <!-- Tab view - Preview Cards -->
+        <div class="tab-pane fade" id="preview-tab-pane" role="tabpanel" aria-labelledby="preview-tab" tabindex="0">
             <% flashcards.forEach(function(card) { %>
-                <div class="single-card-container mb-4">
-                    <!-- Hidden div containing super memo 2 implementation state -->
-                    <div class="sm2-metadata" style="display: none"><%= card.sm2_repetitions %>,<%= card.sm2_interval %>,<%= card.sm2_easiness %>,<%= card.sm2_next_scheduled %></div>
-                    <!-- Summernote editors for Question and Answer -->
-                    <div class="summernote"><%- card.question %></div>
-                    <div class="summernote"><%- card.answer %></div>
-                    <!-- Delete card button -->
-                    <div>
-                        <button type="button" class="btn btn-danger delete-card-btn">
-                            <i class="bi bi-trash3-fill"></i>
-                        </button>
+                <div class="card-preview-container mb-4">
+                    <!-- Question card -->
+                    <div class="card">
+                        <div class="card-body">
+                            <%- card.question %>
+                        </div>
+                    </div>
+                    <!-- Answer card -->
+                    <div class="ms-4 card">
+                        <div class="card-body">
+                            <%- card.answer %>
+                        </div>
                     </div>
                 </div>
             <% }) %>
         </div>
-        <!-- Button to add new flashcard -->
-        <a class="me-4 mt-5 mb-4 btn btn-white" role="button" id="createNewFlashcardButton">Create New Flashcard</a>
     </div>
-
-    <!-- Tab view - Preview Cards -->
-    <div class="tab-pane fade" id="preview-tab-pane" role="tabpanel" aria-labelledby="preview-tab"
-         tabindex="0">
-        <% flashcards.forEach(function(card) { %>
-            <div class="card-preview-container mb-4">
-                <!-- Question card -->
-                <div class="card">
-                    <div class="card-body">
-                        <%- card.question %>
-                    </div>
-                </div>
-                <!-- Answer card -->
-                <div class="ms-4 card">
-                    <div class="card-body">
-                        <%- card.answer %>
-                    </div>
-                </div>
-            </div>
-        <% }) %>
-    </div>
-</div>
-
-
-<!-- Scripts for implementing Summernote and Bootstrap javascript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"
-></script>
-<script src="/summernote/summernote-lite.min.js"></script>
-<!--Main script for flashcard page -->
-<script src="/scripts/flashcard.js"></script>
-
+    
+    <!-- Scripts for implementing Summernote and Bootstrap javascript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+    
+    <script src="/summernote/summernote-lite.min.js"></script>
+    <!--Main script for flashcard page -->
+    <script src="/scripts/flashcard.js"></script>
 </body>
