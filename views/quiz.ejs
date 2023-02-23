@@ -12,6 +12,34 @@
 </head>
 
 <body id="subjectBody">
+<!-- Bootstrap modal to show User's score after a Quiz -->
+<div class="modal fade" id="quizScoreModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Your Score</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Display Quiz score -->
+                <div id="quiz-score-text"></div>
+                <!-- Progress bar to show Quiz score -->
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%"
+                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <!-- Done button takes user back to previous step in window history -->
+                <!-- From https://stackoverflow.com/questions/8067510/onclick-javascript-to-make-browser-go-back-to-previous-page -->
+                <button type="button" class="btn btn-secondary" onclick="window.history.go(-1); return false;">Done</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Try Again</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar  -->
 <nav class="pt-5 pb-4 navbar navbar-expand-lg bg-body-white">
     <a class="navbar-brand" href="/">
         <img src="/images/navbarlogo.png" alt="Bootstrap" id="navbarLogo" width="121" height="50">
@@ -50,7 +78,8 @@
                 Subject
             </a>
         <% } else { %>
-            <a class="quiz-button" href="/collections/<%= subject.subject_name %>/<%= collection.collection_id %>">Back to
+            <a class="quiz-button" href="/collections/<%= subject.subject_name %>/<%= collection.collection_id %>">Back
+                to
                 Collection
             </a>
         <% } %>
@@ -70,6 +99,8 @@
                 <p>Nothing to study. Please add more cards or come back tomorrow.</p>
             </div>
         <% } %>
+        <!-- Hidden element for using flashcards.length in the markCard() function -->
+        <div style="display: none" id="flashcards-length"><%= flashcards.length %></div>
         <!-- Question/Answer -->
         <% for (let i = 0; i < flashcards.length; i++) { %>
             <div class="mySlides">
@@ -85,7 +116,8 @@
                     <p id="numberOfCards">Card <%= i + 1 %> of <%= flashcards.length %></p>
                     <p id="question" class="mt-5 mb-5 text-break"><%- card.question %></p>
                 </div>
-                <div id="flashcard-answer" class="flashcard-answer shadow bg-body-tertiary rounded text-break" style="display: none;">
+                <div id="flashcard-answer" class="flashcard-answer shadow bg-body-tertiary rounded text-break"
+                     style="display: none;">
                     <p id="numberOfCards">Card <%= i + 1 %> of <%= flashcards.length %></p>
                     <p id="answer" class="mt-5 mb-5 text-break"><%- card.answer %></p>
                 </div>

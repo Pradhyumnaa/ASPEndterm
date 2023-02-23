@@ -260,3 +260,10 @@ body {
 #numberOfCards{
     font-size: 13px;
 }
+
+#quiz-score-text{
+    font-size: 34px;
+    color: red;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}

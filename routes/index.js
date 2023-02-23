@@ -158,7 +158,7 @@ router.get('/collections/:subject/:collection', function (req, res, next) {
     }
 });
 
-
+// Function that returns unix timestamp of today's start time (12 AM)
 const todayStartDay = () => {
     let start = new Date();
     start.setUTCHours(0, 0, 0, 0);

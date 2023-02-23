@@ -1,6 +1,9 @@
 // Javascript for carousel slide - Browse Deck tab
 // Adapted from https://www.w3schools.com/howto/howto_js_quotes_slideshow.asp
 let slideIndex = 1;
+// Variable used to calculate User's final quiz score
+let userConfidenceScore = 0;
+
 showSlides(slideIndex);
 
 // If the user selects a confidence number less than 3 for a card, then the user does not remember the card well
@@ -97,6 +100,22 @@ function markCard(confidence) {
             + "," + sm2NextSchedule + ","
             + flashcardIndex
         );
+        // Adding card confidence number to total confidence score of Quiz session
+        userConfidenceScore += confidence;
+        // Show score after all user has studied all cards
+        const totalNumOfSlides = parseInt($("#flashcards-length").text());
+        if (slideIndex === totalNumOfSlides) {
+            let myModal = new bootstrap.Modal(document.getElementById('quizScoreModal'));
+            // Calculating result of Quiz session
+            let quizResult = Math.floor(userConfidenceScore / (totalNumOfSlides * 5) * 100);
+            // Set value of div containing Quiz score
+            $('#quiz-score-text').text("" + quizResult + "%");
+            // Set value of progress bar
+            $('.progress-bar').css('width', '' + quizResult + '%').attr('aria-valuenow', '' + quizResult);
+            myModal.show();
+            // Set total confidence score back to 0
+            userConfidenceScore = 0;
+        }
         // Go to the next slide.
         plusSlides(1);
     });
@@ -143,6 +162,7 @@ $(document).on("click", "#reveal-answer-button", function () {
 const nextScheduledDay = (interval) => {
     let start = new Date();
     start.setUTCHours(0, 0, 0, 0);
+    // Next scheduled date of card is today's date + interval
     return Math.floor(start.getTime() / 1000 + (Math.floor(interval) * 24 * 60 * 60));
 };
 
