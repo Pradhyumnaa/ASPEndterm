@@ -1,8 +1,9 @@
 // Javascript for carousel slide - Browse Deck tab
 // Adapted from https://www.w3schools.com/howto/howto_js_quotes_slideshow.asp
 let slideIndex = 1;
-// Variable used to calculate User's final quiz score
+// Variables used to calculate User's final quiz score
 let userConfidenceScore = 0;
+const maxScorePerCard = 5;
 
 showSlides(slideIndex);
 
@@ -107,7 +108,7 @@ function markCard(confidence) {
         if (slideIndex === totalNumOfSlides) {
             let myModal = new bootstrap.Modal(document.getElementById('quizScoreModal'));
             // Calculating result of Quiz session
-            let quizResult = Math.floor(userConfidenceScore / (totalNumOfSlides * 5) * 100);
+            let quizResult = Math.floor(userConfidenceScore / (totalNumOfSlides * maxScorePerCard) * 100);
             // Set value of div containing Quiz score
             $('#quiz-score-text').text("" + quizResult + "%");
             // Set value of progress bar
