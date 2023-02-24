@@ -113,6 +113,14 @@ function markCard(confidence) {
             $('#quiz-score-text').text("" + quizResult + "%");
             // Set value of progress bar
             $('.progress-bar').css('width', '' + quizResult + '%').attr('aria-valuenow', '' + quizResult);
+            //Score Description
+            if(quizResult >= 80){
+                $('#quiz-score-description').text("Great Job!");
+            } else if(quizResult >= 50){
+                $('#quiz-score-description').text("You Can Do Better!");
+            } else{
+                $('#quiz-score-description').text("Still got a long way to go!");
+            }
             myModal.show();
             // Set total confidence score back to 0
             userConfidenceScore = 0;
