@@ -1,58 +1,70 @@
 /*SF Pro Display font Importing via CDN*/
+
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
 /*Setting The Font of Body to SF Pro Display*/
+
 body {
     font-family: 'SF Pro Display', sans-serif;
 }
 
+
 /*Login Page Background Colour and Font*/
+
 #loginPageBody {
     background-color: #FBFBFD;
     font-family: 'SF Pro Display', sans-serif;
 }
 
+
 /*Login Page Container for Logo, Text and Button*/
+
 #loginPageBox {
     background-color: #FFFFFF;
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.05);
     border-radius: 5px;
-
     margin-left: 25%;
     margin-right: 25%;
-
     margin-top: 8%;
     margin-bottom: 8%;
-
     padding-top: 4%;
-
     padding-bottom: 4%;
 }
 
+
 /*Quizly Logo Image*/
+
 #quizlyLogoLogin {
     width: 5%;
 }
 
+
 /*Sign In To Quizly Text*/
+
 #signInPrompt {
     font-weight: 500;
 }
 
+
 /*Effortlessly Sign Up Text*/
+
 #signInInfo {
     margin-left: 15%;
     margin-right: 15%;
     color: #888888;
 }
 
+
 /*Continue With Google Button Style*/
+
 #continueWithGoogleButton {
     padding-left: 6.5%;
     padding-right: 6.5%;
 }
 
+
 /*Setting the Margin for Subject Page Body*/
+
 #subjectBody {
     margin-left: 7.5%;
     margin-right: 7.5%;
@@ -60,7 +72,9 @@ body {
     font-family: 'SF Pro Display', sans-serif;
 }
 
+
 /*Introduction for the Subjects Page*/
+
 #subjectsIntro {
     color: #888888;
 }
@@ -71,6 +85,7 @@ body {
     padding-bottom: 5%;
     font-size: 18px;
 }
+
 
 /*Breadcrumb Design*/
 
@@ -83,12 +98,16 @@ body {
     text-decoration: none;
 }
 
+
 /*Buttons inside Collection and Flashcard*/
+
 #quiz-button {
     font-size: 18px;
 }
 
+
 /*Buttons inside Quiz*/
+
 .quiz-button {
     color: #0d6efd;
     text-decoration: none;
@@ -97,13 +116,13 @@ body {
 
 
 /*Collections Page Button Designs*/
+
 #createNewCollectionButton {
     width: 30%;
     padding-top: 9%;
     padding-bottom: 9%;
     font-size: 22px;
     color: #888;
-
     border-width: 2px;
     border-style: dashed;
     border-color: #c4c4c4;
@@ -119,14 +138,15 @@ body {
     font-size: 22px;
 }
 
+
 /*Flashcard Page Design*/
+
 #createNewFlashcardButton {
     width: 100%;
     padding-top: 9%;
     padding-bottom: 9%;
     font-size: 22px;
     color: #888;
-
     border-width: 2px;
     border-style: dashed;
     border-color: #c4c4c4;
@@ -140,7 +160,9 @@ body {
     border-top: 0 none;
 }
 
+
 /*Setting rich text editors side by side in flashcard page*/
+
 .single-card-container {
     display: flex;
     justify-content: space-between;
@@ -169,22 +191,31 @@ body {
     text-align: left;
 }
 
+
 /* Carousel CSS - from https://www.w3schools.com/howto/howto_js_quotes_slideshow.asp */
+
+
 /* Slideshow container */
+
 .slideshow-container {
     position: relative;
     background: #FBFBFD;
 }
 
+
 /* Slides */
+
 .mySlides {
     display: none;
     padding: 80px;
     text-align: center;
 }
 
+
 /* Next & previous buttons */
-.carousel-prev, .carousel-next {
+
+.carousel-prev,
+.carousel-next {
     cursor: pointer;
     position: absolute;
     top: 50%;
@@ -198,27 +229,36 @@ body {
     user-select: none;
 }
 
+
 /* Position the "next button" to the right */
+
 .carousel-next {
     position: absolute;
     right: 0;
     border-radius: 3px 0 0 3px;
 }
 
+
 /* On hover, add a black background color with a little bit see-through */
-.carousel-prev:hover, .carousel-next:hover {
+
+.carousel-prev:hover,
+.carousel-next:hover {
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
 }
 
+
 /* The dot/bullet/indicator container */
+
 .carousel-dot-container {
     text-align: center;
     padding: 20px;
     background: #ddd;
 }
 
+
 /* The dots/bullets/indicators */
+
 .carousel-dot {
     cursor: pointer;
     height: 15px;
@@ -230,47 +270,53 @@ body {
     transition: background-color 0.6s ease;
 }
 
+
 /* Add a background color to the active dot/circle */
-.carousel-active, .carousel-dot:hover {
+
+.carousel-active,
+.carousel-dot:hover {
     background-color: #717171;
 }
 
+
 /* End of Carousel CSS */
-#flashcard-question{
-    padding-top: 7%;
-    padding-bottom: 7%;
-    padding-left: 5%;
-    padding-right: 5%;
-}
-#question{
-    font-size: 34px;
-}
 
-#flashcard-answer{
+#flashcard-question {
     padding-top: 7%;
     padding-bottom: 7%;
     padding-left: 5%;
     padding-right: 5%;
 }
 
-#answer{
+#question {
     font-size: 34px;
 }
 
-#numberOfCards{
+#flashcard-answer {
+    padding-top: 7%;
+    padding-bottom: 7%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#answer {
+    font-size: 34px;
+}
+
+#numberOfCards {
     font-size: 13px;
 }
 
-#quiz-score-text{
+#quiz-score-text {
     font-size: 24px;
     color: #0d6efd;
     padding-top: 3%;
     padding-bottom: 3%;
 }
 
-#quiz-score-description{
+#quiz-score-description {
     font-size: 34px;
-    color: #0d6efd;
+    color: #0d6efe;
     padding-top: 3%;
     padding-bottom: 3%;
 }
