@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 
 <head>
-    <title>Quizly - <%= subject.subject_name %></title>
+    <title>Quizly -
+        <%= subject.subject_name %>
+    </title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
 
@@ -21,7 +23,9 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="me-5 nav-link disabled"><%= user.nickname %></a>
+                    <a class="me-5 nav-link disabled">
+                        <%= user.nickname %>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="ps-5 pe-5 btn btn-primary" href="/logout" role="button">Log Out</a>
@@ -34,8 +38,10 @@
         <div class="col-6">
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="/">Level <%= subject.level_id %></a></li>
-                  <li class="breadcrumb-item active" aria-current="page"><%= subject.subject_name %></li>
+                    <li class="breadcrumb-item"><a href="/">Level <%= subject.level_id %></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <%= subject.subject_name %>
+                    </li>
                 </ol>
             </nav>
         </div>
@@ -59,7 +65,9 @@
 
     <% collections.forEach(function(collection){ %>
         <div class="me-4 mt-5 mb-4 btn-group-vertical" role="group" aria-label="Basic example" id="collectionGroup">
-            <a class="shadow btn btn-white text-break" href="/collections/<%= subject.subject_name %>/<%= collection.collection_id %>" role="button" id="collectionNameButton"><%= collection.collection_name %></a>
+            <a class="shadow btn btn-white text-break" href="/collections/<%= subject.subject_name %>/<%= collection.collection_id %>" role="button" id="collectionNameButton">
+                <%= collection.collection_name %>
+            </a>
 
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button class="btn btn-primary" id="editCollectionButton" data-bs-target="#editModal<%= collection.collection_id %>" data-bs-toggle="modal">Edit</button>
@@ -72,7 +80,9 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header border-0">
-                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Edit <%= collection.collection_name %></h1>
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Edit
+                            <%= collection.collection_name %>
+                        </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form method="post" action="/editCollection">
@@ -93,12 +103,15 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header border-0">
-                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Delete <%= collection.collection_name %></h1>
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Delete
+                            <%= collection.collection_name %>
+                        </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-danger" role="alert">
-                            Delete <%= collection.collection_name %>? This action cannot be undone.
+                            Delete
+                            <%= collection.collection_name %>? This action cannot be undone.
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-between border-0">
@@ -110,30 +123,30 @@
                 </div>
             </div>
         </div>
-    <% }) %>
+        <% }) %>
 
-    <a class="me-4 mt-5 mb-4 btn btn-white" role="button" data-bs-toggle="modal" data-bs-target="#createCollectionModal" id="createNewCollectionButton" >Add New Collection</a>
+            <a class="me-4 mt-5 mb-4 btn btn-white" role="button" data-bs-toggle="modal" data-bs-target="#createCollectionModal" id="createNewCollectionButton">Add New Collection</a>
 
-    <!-- Create Collection Modal -->
-    <div class="modal fade" id="createCollectionModal" tabindex="-1" aria-labelledby="createCollectionModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h1 class="modal-title fs-5" id="createCollectionModalLabel">Create New Collection</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!-- Create Collection Modal -->
+            <div class="modal fade" id="createCollectionModal" tabindex="-1" aria-labelledby="createCollectionModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header border-0">
+                            <h1 class="modal-title fs-5" id="createCollectionModalLabel">Create New Collection</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="post" action="/createCollection">
+                            <div class="modal-body">
+                                <input class="form-control form-control-lg" type="text" placeholder="Collection Name" aria-label=".form-control-lg example" name="collectionName" id="collectionName" maxlength="28" pattern="^[a-zA-Z0-9\s]+$" title="No Special Characters" required>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-between border-0">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                <button class="btn btn-primary" type="submit">Create</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <form method="post" action="/createCollection">
-                    <div class="modal-body">
-                        <input class="form-control form-control-lg" type="text" placeholder="Collection Name" aria-label=".form-control-lg example" name="collectionName" id="collectionName" maxlength="28" pattern="^[a-zA-Z0-9\s]+$" title="No Special Characters"  required>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-between border-0">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                        <button class="btn btn-primary" type="submit">Create</button>
-                    </div>
-                </form>
             </div>
-        </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
