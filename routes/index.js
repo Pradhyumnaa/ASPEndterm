@@ -253,7 +253,7 @@ const getSubjectQuiz = (req, res, next, onlyScheduled) => {
 
     global.db.all(getAllSubjectsQuery, [currentSubject], (err, subject) => {
         global.db.all(getCollectionsQuery, [currentSubject, userEmail], (err, collection) => {
-            if (err || collection.length === 0 || subject.length !== 1) {
+            if (err || subject.length !== 1) {
                 res.redirect('/');
             } else {
                 const subjectUserCollections = collection.map(x => "" + x.collection_id).join(", ");
