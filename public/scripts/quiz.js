@@ -90,7 +90,7 @@ function markCard(confidence) {
             sm2NextSchedule: sm2NextSchedule,
             flashcardIndex: flashcardIndex,
             collectionId: cardCollectionId,
-            subject: $("#current_subject").text()
+            subject: $("#current_subject").text().replace(/\s/g, '')
         })
     }).then(() => {
         // And then update the hidden element with the values, so if user studies for another round

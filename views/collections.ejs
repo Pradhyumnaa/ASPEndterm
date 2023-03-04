@@ -49,30 +49,9 @@
         <div class="col-6 text-end">
             <a id="quiz-button" class="btn btn-primary" href="/quiz/<%= subject.subject_name %>" role="button">Study All</a>
             <a id="quiz-button" class="ms-3 btn btn-primary" href="/scheduled-quiz/<%= subject.subject_name %>" role="button">SM2: Study Scheduled</a>
-
-
             <!-- Button trigger modal -->
             <button type="button" class="ms-3 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> Info</button>
-
-
-
         </div>
-
-
-
-
-        <!-- <div class="btn-group" role="group" aria-label="Basic outlined example">
-                <a id="quiz-button" class="btn btn-outline-primary" href="/quiz/<%= subject.subject_name %>" role="button">Study All</a>
-                <a id="quiz-button" class="btn btn-outline-primary" href="/scheduled-quiz/<%= subject.subject_name %>" role="button">Study Selected</a>
-            </div> -->
-
-        <!-- <a class="quiz-button" href="/quiz/<%= subject.subject_name %>">Study All
-                <i class="bi bi-play-circle-fill"></i>
-            </a>
-            <a class="quiz-button" href="/scheduled-quiz/<%= subject.subject_name %>">Study Scheduled
-                <i class="bi bi-play-circle-fill"></i>
-            </a> -->
-    </div>
     </div>
 
     <% collections.forEach(function(collection){ %>

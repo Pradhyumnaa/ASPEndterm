@@ -103,7 +103,7 @@ $(document).on("click", ".save-button", function () {
     const flashcards = $('.single-card-container');
     const cards = [];
     const collectionId = parseInt($("#collection_id").text());
-    const subject = $("#current_subject").text();
+    const subject = $("#current_subject").text().replace(/\s/g, '');
     flashcards.each(function (index) {
         // Getting sm2 metadata elements and pushing to card array, so it can be added to the database
         // This ensures that the card scheduling state remains intact
