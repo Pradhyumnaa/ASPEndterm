@@ -44,13 +44,13 @@ router.get('/collections/:subject', function (req, res) {
     if (req.oidc.isAuthenticated()) {
         currentSubject = req.params.subject;
 
-        var getAllSubjectsQuery = "SELECT * FROM subjects where subject_name=?;";
-        var getSubjectCollectionsQuery = "SELECT * from collections WHERE subject_id = ? AND user_email = ?;";
+        const getAllSubjectsQuery = "SELECT * FROM subjects where subject_name=?;";
+        const getSubjectCollectionsQuery = "SELECT * from collections WHERE subject_id = ? AND user_email = ?;";
 
         global.db.all(getAllSubjectsQuery, [currentSubject], function (err, subject) {
             global.db.all(getSubjectCollectionsQuery, [currentSubject, userEmail], function (err, allCollectionsResult) {
-                if (err) {
-                    console.log(err);
+                if (err || subject.length === 0) {
+                    res.redirect('/');
                 } else {
                     res.render('collections', {subject: subject[0], collections: allCollectionsResult})
                 }
