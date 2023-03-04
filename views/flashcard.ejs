@@ -112,12 +112,10 @@
                                         <%= card.sm2_next_scheduled %>
                         </div>
                         <!-- Summernote editors for Question and Answer -->
-                        <div class="summernote">
-                            <%- card.question %>
-                        </div>
-                        <div class="summernote">
-                            <%- card.answer %>
-                        </div>
+                        <!-- Do not reformat the below two lines -->
+                        <div class="summernote"><%- card.question %></div>
+                        <div class="summernote"><%- card.answer %></div>
+                        <!-- Do not reformat the above two lines -->
                         <!-- Delete card button -->
                         <div>
                             <button type="button" class="btn btn-danger delete-card-btn">
