@@ -45,22 +45,34 @@
                 </ol>
             </nav>
         </div>
+
         <div class="col-6 text-end">
             <a id="quiz-button" class="btn btn-primary" href="/quiz/<%= subject.subject_name %>" role="button">Study All</a>
             <a id="quiz-button" class="ms-3 btn btn-primary" href="/scheduled-quiz/<%= subject.subject_name %>" role="button">SM2: Study Scheduled</a>
 
-            <!-- <div class="btn-group" role="group" aria-label="Basic outlined example">
+
+            <!-- Button trigger modal -->
+            <button type="button" class="ms-3 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> Info</button>
+
+
+
+        </div>
+
+
+
+
+        <!-- <div class="btn-group" role="group" aria-label="Basic outlined example">
                 <a id="quiz-button" class="btn btn-outline-primary" href="/quiz/<%= subject.subject_name %>" role="button">Study All</a>
                 <a id="quiz-button" class="btn btn-outline-primary" href="/scheduled-quiz/<%= subject.subject_name %>" role="button">Study Selected</a>
             </div> -->
 
-            <!-- <a class="quiz-button" href="/quiz/<%= subject.subject_name %>">Study All
+        <!-- <a class="quiz-button" href="/quiz/<%= subject.subject_name %>">Study All
                 <i class="bi bi-play-circle-fill"></i>
             </a>
             <a class="quiz-button" href="/scheduled-quiz/<%= subject.subject_name %>">Study Scheduled
                 <i class="bi bi-play-circle-fill"></i>
             </a> -->
-        </div>
+    </div>
     </div>
 
     <% collections.forEach(function(collection){ %>
@@ -144,6 +156,34 @@
                                 <button class="btn btn-primary" type="submit">Create</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SM2 info Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header border-0">
+                            <h5 class="modal-title" id="exampleModalLabel"> Explained</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>This application uses the Super Memo 2 algorithm to schedule your flashcards for you <br> What is SM2?<br> SM2 is a basic spaced repetition algorithm that calculates how many days can pass before you need to study a flashcard
+                                again, based on your confidence level in that flashcard today. <br> Confidence level? <br> This is how easily you can recall the information in the flashcard. This is a number from 0 to 5 that you, the user will provide
+                                for each flashcard you study. <br> The SM2 algorithm uses your confidence level for each flashcard (0 to 5) to schedule a date for when you should next study that flashcard. <br> If you have low confidence in a flashcard,
+                                this card will be scheduled for studying again sooner than a card that you can remember well. <br> A card that you cannot remember well (confidence value
+                                < 3) will be scheduled for studying again the very next day. <br>
+                                    If you have high confidence in a flashcard, this card will be scheduled for re-studying after a longer number of days than a flashcard you have low confidence in. <br> Click on the "Study Scheduled" button to study
+                                    any flashcards that may be scheduled for you on that day <br> Click on the "Study All" button to study all your flashcards together and not just the scheduled ones. <br> This flashcard application has implemented the
+                                    SM2 algorithm in accordance with information obtained from <a href="https://super-memory.com/english/ol/sm2.htm">here</a> </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                        </div>
                     </div>
                 </div>
             </div>
