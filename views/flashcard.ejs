@@ -64,6 +64,8 @@
         <div class="col-6 text-end">
             <a id="quiz-button" class="btn btn-primary" href="/quiz/<%= subject.subject_name %>/<%= collection.collection_id %>" role="button">Study All</a>
             <a id="quiz-button" class="ms-3 btn btn-primary" href="/scheduled-quiz/<%= subject.subject_name %>/<%= collection.collection_id %>" role="button">SM2: Study Scheduled</a>
+            <!-- SM2 Info Button -->
+            <button type="button" id="quiz-button" class="ms-3 btn btn-primary" data-bs-toggle="modal" data-bs-target="#SM2InfoModal">What is SM2?</button>
         </div>
     </div>
 
@@ -123,7 +125,7 @@
                             </button>
                         </div>
                     </div>
-                    <% }) %>
+                <% }) %>
             </div>
             <!-- Button to add new flashcard -->
             <a class="me-4 mt-5 mb-4 btn btn-white" role="button" id="createNewFlashcardButton">Create New Flashcard</a>
@@ -146,7 +148,35 @@
                         </div>
                     </div>
                 </div>
-                <% }) %>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- SM2 info Modal -->
+    <div class="modal fade" id="SM2InfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">SM2 Explained</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>What is SM2?</h5>
+                    <p>SM2 is a basic spaced repetition algorithm that calculates how many days can pass before you need to study a flashcard again, based on your confidence level in that flashcard today.</p>
+                    <h5>Confidence level?</h5>
+                    <p>This is how easily you can recall the information in the flashcard. This is a number from 0 to 5 that you, the user will provide for each flashcard you study.</p>
+                    <p>The SM2 algorithm uses your confidence level for each flashcard (0 to 5) to schedule a date for when you should next study that flashcard.</p>
+                    <p>
+                        A card that you cannot remember well (confidence value < 3) will be scheduled for studying again the very next day.
+                        If you have high confidence in a flashcard, this card will be scheduled for re-studying after a longer number of days than a flashcard you have low confidence in.
+                    </p>
+                    <h5>Click on the "Study Scheduled" button to study flashcards that may be scheduled for the day.</h5>
+                    <h5>Click on the "Study All" button to study all your flashcards together.</h5>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 
