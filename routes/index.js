@@ -47,14 +47,11 @@ router.get('/collections/:subject', function (req, res) {
         
         currentSubject = req.params.subject;
 
-        console.log(currentSubject);
-
         const getAllSubjectsQuery = "SELECT * FROM subjects where subject_name=?;";
         const getSubjectCollectionsQuery = "SELECT * from collections WHERE subject_name = ? AND user_email = ?;";
 
         global.db.all(getAllSubjectsQuery, [currentSubject], function (err, subject) {
             global.db.all(getSubjectCollectionsQuery, [currentSubject, userEmail], function (err, allCollectionsResult) {
-                console.log(allCollectionsResult)
                 if (err || subject.length === 0) {
                     res.redirect('/');
                 } else {
