@@ -11,13 +11,13 @@ const DOMPurify = createDOMPurify(window);
 const {htmlToText} = require('html-to-text');
 
 //Global Variable for the Current User's Email
-let userEmail = "";
+var userEmail = "";
 
 //Global Variable to Identify the current subject page.
-let currentSubject = 0;
+var currentSubject = 0;
 
 //Global Variable to Identify the current collection page.
-let currentCollection = 0;
+var currentCollection = 0;
 
 //Get function for the Login Page if not Authenticated. Subjects page if Authenticated.
 router.get('/', function (req, res, next) {
@@ -42,17 +42,23 @@ router.get('/', function (req, res, next) {
 // Get function that controls the collections page
 router.get('/collections/:subject', function (req, res) {
     if (req.oidc.isAuthenticated()) {
+
+        userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
+        
         currentSubject = req.params.subject;
 
+        console.log(currentSubject);
+
         const getAllSubjectsQuery = "SELECT * FROM subjects where subject_name=?;";
-        const getSubjectCollectionsQuery = "SELECT * from collections WHERE subject_id = ? AND user_email = ?;";
+        const getSubjectCollectionsQuery = "SELECT * from collections WHERE subject_name = ? AND user_email = ?;";
 
         global.db.all(getAllSubjectsQuery, [currentSubject], function (err, subject) {
             global.db.all(getSubjectCollectionsQuery, [currentSubject, userEmail], function (err, allCollectionsResult) {
+                console.log(allCollectionsResult)
                 if (err || subject.length === 0) {
                     res.redirect('/');
                 } else {
-                    res.render('collections', {subject: subject[0], collections: allCollectionsResult})
+                    res.render('collections', {subject: subject[0], collections: allCollectionsResult});
                 }
             });
         });
@@ -65,9 +71,11 @@ router.get('/collections/:subject', function (req, res) {
 // Post function that controls the "Create Collection" functionality.
 router.post("/createCollection", (req, res, next) => {
 
+    userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
+
     collectionTitle = (req.body.collectionName);
 
-    var createCollectionQuery = "INSERT INTO collections ('collection_name', 'subject_id', 'user_email') VALUES (?,?,?);";
+    var createCollectionQuery = "INSERT INTO collections ('collection_name', 'subject_name', 'user_email') VALUES (?,?,?);";
 
     global.db.run(
         createCollectionQuery,
@@ -87,9 +95,11 @@ router.post("/editCollection", (req, res, next) => {
 
     collectionTitle = (req.body.collectionName);
 
+    userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
+
     collectionID = Object.keys(req.body)[0];
 
-    var updateCollectionQuery = "UPDATE collections SET collection_name = ? WHERE subject_id = ? AND user_email = ? AND collection_id = ?;";
+    var updateCollectionQuery = "UPDATE collections SET collection_name = ? WHERE subject_name = ? AND user_email = ? AND collection_id = ?;";
 
     global.db.run(
         updateCollectionQuery,
@@ -110,7 +120,9 @@ router.post("/deleteCollection", (req, res, next) => {
 
     let collectionID = Object.keys(req.body)[0];
 
-    var deleteCollectionQuery = "DELETE FROM collections WHERE collection_id = ? AND user_email = ? AND subject_id = ?;";
+    userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
+
+    var deleteCollectionQuery = "DELETE FROM collections WHERE collection_id = ? AND user_email = ? AND subject_name = ?;";
     // TODO delete all cards of a collection as well
 
     global.db.run(
@@ -132,11 +144,11 @@ router.get('/collections/:subject/:collection', function (req, res, next) {
     if (req.oidc.isAuthenticated()) {
         currentSubject = req.params.subject;
         currentCollection = req.params.collection;
-        userEmail = req.oidc.user.email;
+        userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
 
         const getAllSubjectsQuery = "SELECT * FROM subjects WHERE subject_name=?;";
-        const getCollectionsQuery = "SELECT * FROM collections WHERE subject_id = ? AND user_email = ? AND collection_id = ?;";
-        const getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id = ? AND subject_id = ?";
+        const getCollectionsQuery = "SELECT * FROM collections WHERE subject_name = ? AND user_email = ? AND collection_id = ?;";
+        const getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id = ? AND subject_name = ?";
 
         global.db.all(getAllSubjectsQuery, [currentSubject], function (err, subject) {
             global.db.all(getCollectionsQuery, [currentSubject, userEmail, currentCollection], function (err, collection) {
@@ -169,10 +181,10 @@ const todayStartDay = () => {
 const getQuiz = (req, res, next, onlyScheduled) => {
     currentSubject = req.params.subject;
     currentCollection = req.params.collection;
-    userEmail = req.oidc.user.email;
+    userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
 
     const getAllSubjectsQuery = "SELECT * FROM subjects WHERE subject_name=?;";
-    const getCollectionsQuery = "SELECT * FROM collections WHERE subject_id = ? AND" +
+    const getCollectionsQuery = "SELECT * FROM collections WHERE subject_name = ? AND" +
         " user_email = ? AND collection_id = ?;";
 
     let getFlashcardsQuery;
@@ -181,10 +193,10 @@ const getQuiz = (req, res, next, onlyScheduled) => {
     //  algorithm will be shown
     if (onlyScheduled) {
         getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id = ? AND " +
-            "subject_id = ? AND (sm2_next_scheduled = 0 OR sm2_next_scheduled <= ?)";
+            "subject_name = ? AND (sm2_next_scheduled = 0 OR sm2_next_scheduled <= ?)";
     } else {
         getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id = ? " +
-            "AND subject_id = ?";
+            "AND subject_name = ?";
 
     }
 
@@ -211,6 +223,7 @@ const getQuiz = (req, res, next, onlyScheduled) => {
 // User will see all the flashcards in the collection
 router.get('/quiz/:subject/:collection', (req, res, next) => {
     if (req.oidc.isAuthenticated()) {
+        userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
         getQuiz(req, res, next, false);
     } else {
         res.redirect('/');
@@ -222,6 +235,7 @@ router.get('/quiz/:subject/:collection', (req, res, next) => {
 // The user will only see the flashcards that are scheduled for that day using the SM2 algorithm
 router.get('/scheduled-quiz/:subject/:collection', (req, res, next) => {
     if (req.oidc.isAuthenticated()) {
+        userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
         getQuiz(req, res, next, true);
     } else {
         res.redirect('/');
@@ -232,10 +246,10 @@ router.get('/scheduled-quiz/:subject/:collection', (req, res, next) => {
 // This function is called when user clicks the Study All or Study Scheduled button for a subject
 const getSubjectQuiz = (req, res, next, onlyScheduled) => {
     currentSubject = req.params.subject;
-    userEmail = req.oidc.user.email;
+    userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
 
     const getAllSubjectsQuery = "SELECT * FROM subjects WHERE subject_name = ?;";
-    const getCollectionsQuery = "SELECT * FROM collections WHERE subject_id = ? AND" +
+    const getCollectionsQuery = "SELECT * FROM collections WHERE subject_name = ? AND" +
         " user_email = ?";
 
     let getFlashcardsQuery;
@@ -244,10 +258,10 @@ const getSubjectQuiz = (req, res, next, onlyScheduled) => {
     //  algorithm will be shown
     if (onlyScheduled) {
         getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id IN ($COLLECTIONS$) AND " +
-            "subject_id = ? AND (sm2_next_scheduled = 0 OR sm2_next_scheduled <= ?)";
+            "subject_name = ? AND (sm2_next_scheduled = 0 OR sm2_next_scheduled <= ?)";
     } else {
         getFlashcardsQuery = "SELECT * FROM flashcards WHERE collection_id IN ($COLLECTIONS$) " +
-            "AND subject_id = ?";
+            "AND subject_name = ?";
 
     }
 
@@ -272,6 +286,7 @@ const getSubjectQuiz = (req, res, next, onlyScheduled) => {
 
 router.get('/quiz/:subject', (req, res, next) => {
     if (req.oidc.isAuthenticated()) {
+        userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
         getSubjectQuiz(req, res, next, false);
     } else {
         res.redirect('/');
@@ -280,6 +295,7 @@ router.get('/quiz/:subject', (req, res, next) => {
 
 router.get('/scheduled-quiz/:subject', (req, res, next) => {
     if (req.oidc.isAuthenticated()) {
+        userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
         getSubjectQuiz(req, res, next, true);
     } else {
         res.redirect('/');
@@ -304,7 +320,7 @@ const purifyCard = (card) => {
 // Function to save flashcards when Save button is pressed
 router.post("/saveCardsOfCollection", (req, res, next) => {
     const collectionId = (req.body.collection_id);
-    userEmail = req.oidc.user.email;
+    userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
 
     // Filtering out cards where Question or Answer is an empty string
     const cards = req.body.cards.filter(cardsFilterNonEmpty).map(purifyCard);
@@ -319,10 +335,10 @@ router.post("/saveCardsOfCollection", (req, res, next) => {
     // Select the collection that belongs to current user using collection id
     const getCollectionQuery = "SELECT * FROM collections WHERE collection_id = ? AND user_email = ?";
     // Delete all the flashcards, so they can be reinserted to db
-    const deleteFlashCardsQuery = "DELETE FROM flashcards WHERE collection_id = ? AND subject_id = ?"
+    const deleteFlashCardsQuery = "DELETE FROM flashcards WHERE collection_id = ? AND subject_name = ?"
     // Insert card
     const insertCardQuery = 'INSERT INTO flashcards ("collection_id", "question", "answer",' +
-        ' "subject_id", "sm2_repetitions", "sm2_interval", "sm2_easiness", "sm2_next_scheduled") VALUES ' +
+        ' "subject_name", "sm2_repetitions", "sm2_interval", "sm2_easiness", "sm2_next_scheduled") VALUES ' +
         cardsPlaceholders;
 
     global.db.all(
@@ -356,12 +372,13 @@ router.post("/saveCardsOfCollection", (req, res, next) => {
 router.post("/saveCardSM2State", (req, res, next) => {
     const collectionId = req.body.collectionId;
     const subject = req.body.subject;
-    userEmail = req.oidc.user.email;
+    userEmail = req.oidc.user.email; //This stores the userEmail to a variable. Important because this is the identifier in Database.
+
     // Select the collection that belongs to current user using collection id
     const getCollectionQuery = "SELECT * FROM collections WHERE collection_id = ? AND user_email = ?";
     // Update SM2 state information of the card
     const updateFlashcardSM2Query = "UPDATE flashcards SET sm2_repetitions=?, sm2_interval=?," +
-        " sm2_easiness=?, sm2_next_scheduled=? WHERE collection_id=? AND subject_id=? AND flashcard_id=?";
+        " sm2_easiness=?, sm2_next_scheduled=? WHERE collection_id=? AND subject_name=? AND flashcard_id=?";
 
     global.db.run(
         getCollectionQuery,

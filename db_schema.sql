@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS subjects (
 CREATE TABLE IF NOT EXISTS collections (
     collection_id INTEGER PRIMARY KEY AUTOINCREMENT,
     collection_name TEXT NOT NULL,
-    subject_id TEXT NOT NULL,
+    subject_name TEXT NOT NULL,
     user_email TEXT NOT NULL
 );
 
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS flashcards (
     question TEXT NOT NULL,
     answer TEXT NOT NULL,
     collection_id INTEGER NOT NULL,
-    subject_id TEXT NOT NULL,
+    subject_name TEXT NOT NULL,
     sm2_repetitions INTEGER NOT NULL,
     sm2_interval REAL NOT NULL,
     sm2_easiness REAL NOT NULL,
@@ -35,10 +35,10 @@ CREATE TABLE IF NOT EXISTS flashcards (
 
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP1", 4);
 
-INSERT INTO collections("collection_name", "subject_id", "user_email")
+INSERT INTO collections("collection_name", "subject_name", "user_email")
     VALUES ("Midterm collection", "ITP1", "nethashavithana@gmail.com"); -- id -> 1
 
-INSERT INTO flashcards ("question", "answer", "collection_id", "subject_id", "sm2_repetitions", "sm2_interval", "sm2_easiness", "sm2_next_scheduled")
+INSERT INTO flashcards ("question", "answer", "collection_id", "subject_name", "sm2_repetitions", "sm2_interval", "sm2_easiness", "sm2_next_scheduled")
     VALUES ("What is JavaScript?", "A programming language", 1, "ITP1", 0, 1, 2.5, 0),
            ("What is Python?", "A programming language", 1, "ITP1", 0, 1, 2.5, 0),
            ("What is Juce?", "An audio programming library for C++", 1, "ITP1", 0, 1, 2.5, 0);
