@@ -13,7 +13,7 @@ $(document).ready(function () {
         callbacks: {
             // callback for pasting text only (no formatting)
             onPaste: function (e) {
-              var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+              let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
               e.preventDefault();
               bufferText = bufferText.replace(/\r?\n/g, '<br>');
               document.execCommand('insertHtml', false, bufferText);

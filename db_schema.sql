@@ -29,21 +29,8 @@ CREATE TABLE IF NOT EXISTS flashcards (
     sm2_next_scheduled INTEGER NOT NULL
 );
 
--- Both subjects and collections will have id == 1 for the first entry,
---      therefore, we can add a collection by specifying subject_id as 1
---      now we can add flash cards by specifying subject collection_id as 1
-
-INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP1", 4);
-
-INSERT INTO collections("collection_name", "subject_name", "user_email")
-    VALUES ("Midterm collection", "ITP1", "nethashavithana@gmail.com"); -- id -> 1
-
-INSERT INTO flashcards ("question", "answer", "collection_id", "subject_name", "sm2_repetitions", "sm2_interval", "sm2_easiness", "sm2_next_scheduled")
-    VALUES ("What is JavaScript?", "A programming language", 1, "ITP1", 0, 1, 2.5, 0),
-           ("What is Python?", "A programming language", 1, "ITP1", 0, 1, 2.5, 0),
-           ("What is Juce?", "An audio programming library for C++", 1, "ITP1", 0, 1, 2.5, 0);
-
 -- Add the rest of the subjects
+INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP1", 4);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("ITP2", 4);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("CM", 4);
 INSERT INTO subjects ("subject_name", "level_id") VALUES ("DM", 4);

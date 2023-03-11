@@ -130,11 +130,6 @@ function markCard(confidence) {
     });
 }
 
-function currentSlide(n) {
-    hideAnswer();
-    showSlides(slideIndex = n);
-}
-
 function showSlides(n) {
     let i;
     const slides = document.getElementsByClassName("mySlides");
