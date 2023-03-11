@@ -1,8 +1,12 @@
-<%- include('partials/header') -%>
-
-    <h1 class="text-4xl">💣
+<body>
+    <h1 class="text-4xl" style="display: flex; justify-content: center; align-items: center; text-align: center; min-height: 80vh">💣
         <%= error.status || "ERROR" %>:
-            <%= message || "Error" %>
+        <%= message || "Error" %>
     </h1>
 
-    <%- include('partials/footer') -%>
+    <h1 class="text-4xl" style="justify-content: center; align-items: center; text-align: center;">
+        <a  style="text-align: center; font-size: 20px;" href="/">
+            Go Back Home
+        </a>
+    </h1>
+</body>
