@@ -399,6 +399,8 @@ router.post("/saveCardSM2State", (req, res, next) => {
 });
 
 
+//Auth0 Example Code that we used 
+
 // router.get('/', function (req, res, next) {
 // res.render('index', {
 //     title: 'Auth0 Webapp sample Nodejs',
@@ -411,13 +413,6 @@ router.post("/saveCardSM2State", (req, res, next) => {
 // res.render('profile', {
 //     userProfile: JSON.stringify(req.oidc.user, null, 2),
 //     title: 'Index Page'
-// });
-// });
-
-// router.get('/loginPage', function (req, res, next) {
-// res.render('loginPage', {
-//     title: 'Auth0 Webapp sample Nodejs',
-//     isAuthenticated: req.oidc.isAuthenticated()
 // });
 // });
 
